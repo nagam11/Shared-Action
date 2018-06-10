@@ -8,6 +8,7 @@
 
 import Cocoa
 import Orphe
+import OSCKit
 
 class ViewController: NSViewController {
     
@@ -35,6 +36,18 @@ class ViewController: NSViewController {
         ORPManager.sharedInstance.startScan()
         
         //rssiTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ViewController.readRSSI), userInfo: nil, repeats: true)
+        
+        //OSC view
+        OSCManager.sharedInstance.delegate = self
+        if !OSCManager.sharedInstance.startReceive(){
+            //oscReceiverTextField.textColor = .red
+        }
+        /*oscHostTextField.stringValue = OSCManager.sharedInstance.clientHost
+        oscSenderTextField.stringValue = String(OSCManager.sharedInstance.clientPort)
+        oscReceiverTextField.stringValue = String(OSCManager.sharedInstance.serverPort)*/
+        print(OSCManager.sharedInstance.clientHost)
+        print(String(OSCManager.sharedInstance.clientPort))
+        print(String(OSCManager.sharedInstance.serverPort))
     }
 
     override var representedObject: Any? {
@@ -244,5 +257,11 @@ extension  ViewController: ORPManagerDelegate{
             rightGesture = "Gesture: " + kind + "\n"
             rightGesture += "power: " + String(power)
         }
+    }
+}
+extension ViewController: OSCManagerDelegate{
+    func oscDidReceiveMessage(message:String) {
+        //oscLogTextView.string = message + "\n" + oscLogTextView.string!
+        print(message)
     }
 }
