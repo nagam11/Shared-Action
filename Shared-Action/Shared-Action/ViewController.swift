@@ -12,17 +12,27 @@ import OSCKit
 
 class ViewController: NSViewController {
     
+    // UUID ORPHE DATA
+    let FIRST_PLAYER_LEFT_UUID = "A0A2DB4C-F967-41AF-B4C4-44229AE535F3"
+    let FIRST_PLAYER_RIGHT_UUID = ""
+    let SECOND_PLAYER_LEFT_UUID = ""
+    let SECOND_PLAYER_RIGHT_UUID = ""
+    
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var leftSensorLabel: NSTextField!
-    @IBOutlet weak var rightSensorLabel: NSTextField!
-    @IBOutlet weak var idLabel: NSTextField!
+    @IBOutlet weak var rightSensorLabel: NSTextField!   
+    @IBOutlet weak var firstPlayerLeft: NSTextField!
     @IBOutlet weak var firstPlayerRight: NSTextField!
     @IBOutlet weak var secondPlayerLeft: NSTextField!
     @IBOutlet weak var secondPlayerRight: NSTextField!
+    @IBOutlet weak var gestureLabel: NSTextField!
+    @IBOutlet weak var gestureDetectedLabel: NSTextField!
     var rssiTimer: Timer?
-    
+
     var leftGesture = ""
     var rightGesture = ""
+    var shoesConnected = false
+    let gestures = ["Heel", "Toe", "Up"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +49,6 @@ class ViewController: NSViewController {
         
         //OSC view
         OSCManager.sharedInstance.delegate = self
-        if !OSCManager.sharedInstance.startReceive(){
-            //oscReceiverTextField.textColor = .red
-        }
-        /*oscHostTextField.stringValue = OSCManager.sharedInstance.clientHost
-        oscSenderTextField.stringValue = String(OSCManager.sharedInstance.clientPort)
-        oscReceiverTextField.stringValue = String(OSCManager.sharedInstance.serverPort)*/
         print(OSCManager.sharedInstance.clientHost)
         print(String(OSCManager.sharedInstance.clientPort))
         print(String(OSCManager.sharedInstance.serverPort))
@@ -71,7 +75,8 @@ class ViewController: NSViewController {
                 }
             }
             
-        }
+        }        
+        self.gestureLabel.stringValue = self.gestures[0]
     }
     
     override func keyDown(with theEvent: NSEvent) {
@@ -123,8 +128,6 @@ extension ViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return ORPManager.sharedInstance.availableORPDataArray.count
     }
-    
-    
 }
 
 extension  ViewController: ORPManagerDelegate{
@@ -150,10 +153,7 @@ extension  ViewController: ORPManagerDelegate{
     }*/
     
     func orpheDidDiscover(orphe:ORPData){
-        print("\n ID NUMBER of this device is \(orphe.idNumber)")
-        print("\n DEVICE UUID NUMBER of is \(orphe.uuid!)")
-        self.idLabel.stringValue = String(describing: orphe.uuid!)
-        PRINT("didDiscoverOrphe")
+        print("\n Discovered device with UUID NUMBER \(orphe.uuid!)")
         tableView.reloadData()
         updateCellsState()
     }
@@ -177,9 +177,23 @@ extension  ViewController: ORPManagerDelegate{
     }
     
     func orpheDidConnect(orphe:ORPData){
-        PRINT("didConnect")
+        print("\n DEVICE UUID NUMBER of is \(orphe.uuid!)")
+        if (orphe.uuid!.uuidString == self.FIRST_PLAYER_LEFT_UUID){
+            self.firstPlayerLeft.stringValue = "connected"
+            self.firstPlayerLeft.textColor = NSColor.green
+        } else if (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID) {
+            self.firstPlayerRight.stringValue = "connected"
+            self.firstPlayerRight.textColor = NSColor.green
+        } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) {
+            self.secondPlayerLeft.stringValue = "connected"
+            self.secondPlayerLeft.textColor = NSColor.green
+        } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID) {
+            self.secondPlayerRight.stringValue = "connected"
+            self.secondPlayerRight.textColor = NSColor.green
+        }        
         tableView.reloadData()
         updateCellsState()
+        self.shoesConnected = true
         
         orphe.setScene(.sceneSDK)
         orphe.setGestureSensitivity(.high)
@@ -245,7 +259,7 @@ extension  ViewController: ORPManagerDelegate{
     }
     
     func orpheDidCatchGestureEvent(gestureEvent:ORPGestureEventArgs, orphe:ORPData) {
-        print("I catched a gesture. HELLO")
+        print("I catched a gesture.")
         let side = orphe.side
         let kind = gestureEvent.getGestureKindString() as String
         let power = gestureEvent.getPower()
