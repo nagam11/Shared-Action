@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -792,15 +792,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tef-IR-kuN">
-                                <rect key="frame" x="206" y="581" width="437" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Shared-Action App" id="5aX-Zj-Ryg">
-                                    <font key="font" size="18" name="AvenirNext-Bold"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2SH-Hg-uxS">
                                 <rect key="frame" x="255" y="514" width="85" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -838,9 +829,9 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdy-Tb-6OK">
-                                <rect key="frame" x="426" y="414" width="99" height="36"/>
+                                <rect key="frame" x="349" y="419" width="158" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="not detected" id="qsG-iF-z4v">
+                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="No Gesture detected" id="qsG-iF-z4v">
                                     <font key="font" size="16" name="AvenirNext-Regular"/>
                                     <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -883,10 +874,21 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="51G-zd-oB8">
-                                <rect key="frame" x="229" y="14" width="154" height="308"/>
+                                <rect key="frame" x="215" y="14" width="103" height="357"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="5rM-1a-ek0">
-                                    <font key="font" size="13" name="AvenirNext-Regular"/>
+                                    <font key="font" size="10" name="AvenirNext-Regular"/>
+                                    <string key="title">LEFT
+                                    </string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g78-yc-rX9">
+                                <rect key="frame" x="464" y="14" width="103" height="356"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="VP7-Lf-HuN">
+                                    <font key="font" size="10" name="AvenirNext-Regular"/>
                                     <string key="title">LEFT
                                     </string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -894,10 +896,10 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Akz-Mu-QqI">
-                                <rect key="frame" x="453" y="14" width="172" height="308"/>
+                                <rect key="frame" x="319" y="14" width="114" height="357"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="tnP-QA-Kz0">
-                                    <font key="font" size="13" name="AvenirNext-Regular"/>
+                                    <font key="font" size="10" name="AvenirNext-Regular"/>
                                     <string key="title">RIGHT
                                     </string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -905,7 +907,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UW8-cH-Wzw">
-                                <rect key="frame" x="312" y="340" width="262" height="23"/>
+                                <rect key="frame" x="339" y="394" width="262" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Press key 0~9 to trigger lights" id="BgP-BY-606">
                                     <font key="font" size="13" name="AvenirNext-Regular"/>
@@ -913,11 +915,22 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LgY-0L-FnW">
-                                <rect key="frame" x="284" y="414" width="99" height="36"/>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uCn-mM-LzV">
+                                <rect key="frame" x="571" y="14" width="114" height="356"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Gesture" id="wKg-6z-Kia">
-                                    <font key="font" size="16" name="AvenirNext-Regular"/>
+                                <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="dEg-Im-95I">
+                                    <font key="font" size="10" name="AvenirNext-Regular"/>
+                                    <string key="title">RIGHT
+                                    </string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tef-IR-kuN">
+                                <rect key="frame" x="225" y="581" width="437" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Shared-Action iOS App" id="5aX-Zj-Ryg">
+                                    <font key="font" size="18" name="AvenirNext-Bold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -930,14 +943,15 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="firstPlayerLeft" destination="R83-pW-jhK" id="SVf-pM-5dN"/>
-                        <outlet property="firstPlayerRight" destination="NXy-5s-lAz" id="gOM-pG-Erx"/>
+                        <outlet property="firstPlayerLeftConnected" destination="R83-pW-jhK" id="Pvb-Sd-lUY"/>
+                        <outlet property="firstPlayerRightConnected" destination="NXy-5s-lAz" id="gF2-4x-zNa"/>
+                        <outlet property="firstPlayer_leftSensorData" destination="51G-zd-oB8" id="CzN-1F-Gt8"/>
+                        <outlet property="firstPlayer_rightSensorData" destination="Akz-Mu-QqI" id="KjG-Vd-Fpl"/>
                         <outlet property="gestureDetectedLabel" destination="fdy-Tb-6OK" id="Oqa-rh-jo1"/>
-                        <outlet property="gestureLabel" destination="LgY-0L-FnW" id="3yj-gH-j4L"/>
-                        <outlet property="leftSensorLabel" destination="51G-zd-oB8" id="JLM-df-cGC"/>
-                        <outlet property="rightSensorLabel" destination="Akz-Mu-QqI" id="LFb-aZ-8y4"/>
-                        <outlet property="secondPlayerLeft" destination="aKl-cu-zky" id="dlT-RD-WWk"/>
-                        <outlet property="secondPlayerRight" destination="vWd-vA-upJ" id="5qH-1y-3il"/>
+                        <outlet property="secondPlayerLeftConnected" destination="aKl-cu-zky" id="cKy-Zf-Yhl"/>
+                        <outlet property="secondPlayerRightConnected" destination="vWd-vA-upJ" id="556-sv-til"/>
+                        <outlet property="secondPlayer_leftSensorData" destination="g78-yc-rX9" id="9LV-EG-MN8"/>
+                        <outlet property="secondPlayer_rightSensorData" destination="uCn-mM-LzV" id="qPE-Wl-xI6"/>
                         <outlet property="tableView" destination="h75-vc-pKQ" id="h8M-6Z-WJ6"/>
                     </connections>
                 </viewController>

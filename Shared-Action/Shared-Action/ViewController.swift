@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  ViewController.swift
 //  Shared-Action
 //
 //  Created by Marla Na on 09.06.18.
@@ -12,27 +12,27 @@ import OSCKit
 
 class ViewController: NSViewController {
     
-    // UUID ORPHE DATA
-    let FIRST_PLAYER_LEFT_UUID = "A0A2DB4C-F967-41AF-B4C4-44229AE535F3"
-    let FIRST_PLAYER_RIGHT_UUID = ""
-    let SECOND_PLAYER_LEFT_UUID = ""
-    let SECOND_PLAYER_RIGHT_UUID = ""
+    //MARK: UUID Orphe Data
+    let FIRST_PLAYER_LEFT_UUID = "DF88A432-0317-4524-8479-CB84AAB5C9A1"
+    let FIRST_PLAYER_RIGHT_UUID = "A0A2DB4C-F967-41AF-B4C4-44229AE535F3"
+    let SECOND_PLAYER_LEFT_UUID = "2FF443A0-FFF9-4317-8C7F-30321B14B779"
+    let SECOND_PLAYER_RIGHT_UUID = "7E186EAA-6E8E-40F2-B91D-C0E92D830254"
     
+    //MARK: IBOutlets
     @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var leftSensorLabel: NSTextField!
-    @IBOutlet weak var rightSensorLabel: NSTextField!   
-    @IBOutlet weak var firstPlayerLeft: NSTextField!
-    @IBOutlet weak var firstPlayerRight: NSTextField!
-    @IBOutlet weak var secondPlayerLeft: NSTextField!
-    @IBOutlet weak var secondPlayerRight: NSTextField!
-    @IBOutlet weak var gestureLabel: NSTextField!
+    @IBOutlet weak var firstPlayer_leftSensorData: NSTextField!
+    @IBOutlet weak var firstPlayer_rightSensorData: NSTextField!
+    @IBOutlet weak var secondPlayer_leftSensorData: NSTextField!
+    @IBOutlet weak var secondPlayer_rightSensorData: NSTextField!
+    @IBOutlet weak var firstPlayerLeftConnected: NSTextField!
+    @IBOutlet weak var firstPlayerRightConnected: NSTextField!
+    @IBOutlet weak var secondPlayerLeftConnected: NSTextField!
+    @IBOutlet weak var secondPlayerRightConnected: NSTextField!
     @IBOutlet weak var gestureDetectedLabel: NSTextField!
     var rssiTimer: Timer?
-
+    
     var leftGesture = ""
     var rightGesture = ""
-    var shoesConnected = false
-    let gestures = ["Heel", "Toe", "Up"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,22 +45,14 @@ class ViewController: NSViewController {
         ORPManager.sharedInstance.isEnableAutoReconnection = false
         ORPManager.sharedInstance.startScan()
         
+        //TODO: Uncomment when not debugging
         //rssiTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ViewController.readRSSI), userInfo: nil, repeats: true)
         
         //OSC view
         OSCManager.sharedInstance.delegate = self
-        print(OSCManager.sharedInstance.clientHost)
-        print(String(OSCManager.sharedInstance.clientPort))
-        print(String(OSCManager.sharedInstance.serverPort))
-    }
-
-    override var representedObject: Any? {
-        didSet {
-            
-        }
     }
     
-    func updateCellsState(){
+    func updateCellsState() {
         for (index, orp) in ORPManager.sharedInstance.availableORPDataArray.enumerated(){
             for (columnNum, _) in tableView.tableColumns.enumerated(){
                 if let cell = tableView.view(atColumn: columnNum, row: index, makeIfNecessary: true) as? NSTableCellView{
@@ -86,10 +78,10 @@ class ViewController: NSViewController {
             }
         }
     }
-
 }
 
-extension  ViewController: NSTableViewDelegate{
+//MARK: TableViewDelegate
+extension  ViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView?{
         let cellIdentifier: String = "NameCell"
@@ -122,6 +114,7 @@ extension  ViewController: NSTableViewDelegate{
     
 }
 
+//MARK: TableViewDataSource
 extension ViewController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
@@ -129,11 +122,10 @@ extension ViewController: NSTableViewDataSource {
     }
 }
 
-extension  ViewController: ORPManagerDelegate{
+//MARK: ORPManagerDelegate
+extension  ViewController: ORPManagerDelegate {
     
-    //MARK: - ORPManagerDelegate
-    func orpheDidUpdateBLEState(state:CBCentralManagerState){
-        //PRINT("didUpdateBLEState", state)
+    func orpheDidUpdateBLEState(state:CBCentralManagerState) {
         switch state {
         case .poweredOn:
             ORPManager.sharedInstance.startScan()
@@ -142,81 +134,97 @@ extension  ViewController: ORPManagerDelegate{
         }
     }
     
-    /*func orpheDidUpdateRSSI(orphe:ORPData){
-       //print("didUpdateRSSI", orphe.RSSI)
-        if let index = ORPManager.sharedInstance.availableORPDataArray.index(of: orphe){
-            if let cell = tableView.view(atColumn: 1, row: index, makeIfNecessary: false) as? NSTableCellView{
-                cell.textField?.stringValue = String(describing: orphe.RSSI)
-            }
-        }
-    }*/
+    //TODO: Uncomment when not debugging
+    /*func orpheDidUpdateRSSI(orphe:ORPData) {
+     //print("didUpdateRSSI", orphe.RSSI)
+     if let index = ORPManager.sharedInstance.availableORPDataArray.index(of: orphe){
+     if let cell = tableView.view(atColumn: 1, row: index, makeIfNecessary: false) as? NSTableCellView{
+     cell.textField?.stringValue = String(describing: orphe.RSSI)
+     }
+     }
+     }*/
     
-    func orpheDidDiscover(orphe:ORPData){
+    func orpheDidDiscover(orphe:ORPData) {
         print("\n Discovered device with UUID NUMBER \(orphe.uuid!)")
+        self.updateOnProblem(orphe: orphe)
         tableView.reloadData()
         updateCellsState()
     }
     
-    func orpheDidDisappear(orphe:ORPData){
-        PRINT("didDisappearOrphe")
+    func orpheDidDisappear(orphe:ORPData) {
+        print("\n DEVICE \(orphe.uuid!) disappeared.")
+        self.updateOnProblem(orphe: orphe)
         tableView.reloadData()
         updateCellsState()
     }
     
-    func orpheDidFailToConnect(orphe:ORPData){
-        PRINT("didFailToConnect")
+    func orpheDidFailToConnect(orphe:ORPData) {
+        print("\n Failed to connect to DEVICE \(orphe.uuid!).")
+        self.updateOnProblem(orphe: orphe)
         tableView.reloadData()
         updateCellsState()
     }
     
-    func orpheDidDisconnect(orphe:ORPData){
-        PRINT("didDisconnect")
+    func orpheDidDisconnect(orphe:ORPData) {
+        print("\n Disconnected from DEVICE \(orphe.uuid!).")
+        self.updateOnProblem(orphe: orphe)
         tableView.reloadData()
         updateCellsState()
     }
     
-    func orpheDidConnect(orphe:ORPData){
-        print("\n DEVICE UUID NUMBER of is \(orphe.uuid!)")
+    func updateOnProblem(orphe:ORPData) {
         if (orphe.uuid!.uuidString == self.FIRST_PLAYER_LEFT_UUID){
-            self.firstPlayerLeft.stringValue = "connected"
-            self.firstPlayerLeft.textColor = NSColor.green
+            self.firstPlayerLeftConnected.stringValue = "disconnected"
+            self.firstPlayerLeftConnected.textColor = NSColor.red
         } else if (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID) {
-            self.firstPlayerRight.stringValue = "connected"
-            self.firstPlayerRight.textColor = NSColor.green
+            self.firstPlayerRightConnected.stringValue = "disconnected"
+            self.firstPlayerRightConnected.textColor = NSColor.red
         } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) {
-            self.secondPlayerLeft.stringValue = "connected"
-            self.secondPlayerLeft.textColor = NSColor.green
+            self.secondPlayerLeftConnected.stringValue = "disconnected"
+            self.secondPlayerLeftConnected.textColor = NSColor.red
         } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID) {
-            self.secondPlayerRight.stringValue = "connected"
-            self.secondPlayerRight.textColor = NSColor.green
+            self.secondPlayerRightConnected.stringValue = "disconnected"
+            self.secondPlayerRightConnected.textColor = NSColor.red
+        }
+    }
+    
+    func orpheDidConnect(orphe:ORPData) {
+        print("\n Connected with DEVICE \(orphe.uuid!).")
+        if (orphe.uuid!.uuidString == self.FIRST_PLAYER_LEFT_UUID){
+            self.firstPlayerLeftConnected.stringValue = "connected"
+            self.firstPlayerLeftConnected.textColor = NSColor.green
+        } else if (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID) {
+            self.firstPlayerRightConnected.stringValue = "connected"
+            self.firstPlayerRightConnected.textColor = NSColor.green
+        } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) {
+            self.secondPlayerLeftConnected.stringValue = "connected"
+            self.secondPlayerLeftConnected.textColor = NSColor.green
+        } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID) {
+            self.secondPlayerRightConnected.stringValue = "connected"
+            self.secondPlayerRightConnected.textColor = NSColor.green
         }        
         tableView.reloadData()
         updateCellsState()
-        self.shoesConnected = true
-        OSCManager.sharedInstance.uuid = self.FIRST_PLAYER_LEFT_UUID
-        
-        self.gestureLabel.stringValue = self.gestures[Int(arc4random_uniform(UInt32(self.gestures.count)))]
         
         orphe.setScene(.sceneSDK)
         orphe.setGestureSensitivity(.high)
     }
     
-    func orpheDidUpdateOrpheInfo(orphe:ORPData){
+    func orpheDidUpdateOrpheInfo(orphe:ORPData) {
         PRINT("didUpdateOrpheInfo")
         for orp in ORPManager.sharedInstance.connectedORPDataArray {
             if orp != orphe && orp.side == orphe.side{
                 orp.switchToOppositeSide()
-                //PRINT("switch to opposite side")
             }
         }
     }
     
-    //MARK: - Others
-    /*@objc func readRSSI(){
-        for orp in ORPManager.sharedInstance.connectedORPDataArray {
-            orp.readRSSI()
-        }
-    }*/
+    //MARK: Uncomment when not debugging
+    /*@objc func readRSSI() {
+     for orp in ORPManager.sharedInstance.connectedORPDataArray {
+     orp.readRSSI()
+     }
+     }*/
     
     func orpheDidUpdateSensorData(orphe: ORPData) {
         let sideInfo:Int32 = Int32(orphe.side.rawValue)
@@ -253,18 +261,31 @@ extension  ViewController: ORPManagerDelegate{
         text += "Shock: "+String(shock) + "\n"
         
         if sideInfo == 0 {
-            leftSensorLabel.stringValue = "LEFT\n\n" + text + "\n" + leftGesture
+            firstPlayer_leftSensorData.stringValue = "FIRST PLAYER \n LEFT\n\n" + text + "\n" + leftGesture
         }
-        else{
-            rightSensorLabel.stringValue = "RIGHT\n\n" + text + "\n" + rightGesture
+        else {
+            secondPlayer_rightSensorData.stringValue = "SECOND PLAYER \n RIGHT\n\n" + text + "\n" + rightGesture
         }
     }
     
     func orpheDidCatchGestureEvent(gestureEvent:ORPGestureEventArgs, orphe:ORPData) {
-        print("I catched a gesture.")
+        let uuid = orphe.uuid!
         let side = orphe.side
         let kind = gestureEvent.getGestureKindString() as String
         let power = gestureEvent.getPower()
+        if (uuid.uuidString == self.FIRST_PLAYER_LEFT_UUID) {
+            print("FIRST PLAYER LEFT FOOT MADE \(kind) gesture with power \(power).")
+            
+        } else if (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID) {
+            print("FIRST PLAYER RIGHT FOOT MADE \(kind) gesture with power \(power).")
+            
+        } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) {
+            print("SECOND PLAYER LEFT FOOT MADE \(kind) gesture with power \(power).")
+            
+        } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID) {
+            print("SECOND PLAYER RIGHT FOOT MADE \(kind) gesture with power \(power).")
+            
+        }
         if side == ORPSide.left {
             leftGesture = "Gesture: " + kind + "\n"
             leftGesture += "power: " + String(power)
@@ -275,7 +296,8 @@ extension  ViewController: ORPManagerDelegate{
         }
     }
 }
-extension ViewController: OSCManagerDelegate{
+//MARK: OSCManagerDelegate
+extension ViewController: OSCManagerDelegate {
     func oscDidReceiveMessage(message:String) {        
         print(message)
     }

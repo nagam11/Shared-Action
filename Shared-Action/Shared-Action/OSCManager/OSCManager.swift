@@ -1,9 +1,9 @@
 //
 //  OSCManager.swift
-//  Orphe-Hub-Swift
+//  Shared-Action
 //
-//  Created by kyosuke on 2017/04/01.
-//  Copyright © 2017 no new folk studio Inc. All rights reserved.
+//  Created by Marla Na on 09.06.18.
+//  Copyright © 2018 Marla Na. All rights reserved.
 //
 
 import Orphe
@@ -14,6 +14,12 @@ import OSCKit
 }
 
 class OSCManager:NSObject, OSCServerDelegate{
+    
+    //MARK: UUID Orphe Data
+    let FIRST_PLAYER_LEFT_UUID = "DF88A432-0317-4524-8479-CB84AAB5C9A1"
+    let FIRST_PLAYER_RIGHT_UUID = "A0A2DB4C-F967-41AF-B4C4-44229AE535F3"
+    let SECOND_PLAYER_LEFT_UUID = "2FF443A0-FFF9-4317-8C7F-30321B14B779"
+    let SECOND_PLAYER_RIGHT_UUID = "7E186EAA-6E8E-40F2-B91D-C0E92D830254"
     
     static let sharedInstance = OSCManager()
     weak var delegate:OSCManagerDelegate?
@@ -33,7 +39,6 @@ class OSCManager:NSObject, OSCServerDelegate{
     }
     
     var serverPort = 1111
-     var uuid = ""
     
     private override init() {
         super.init()
@@ -41,7 +46,7 @@ class OSCManager:NSObject, OSCServerDelegate{
         server.delegate = self
         
         client = OSCClient()
-        startReceive()
+        self.startReceive()
         
         NotificationCenter.default.addObserver(self, selector:  #selector(OSCManager.OrpheDidUpdateSensorData(notification:)), name: .OrpheDidUpdateSensorData, object: nil)
         NotificationCenter.default.addObserver(self, selector:  #selector(OSCManager.OrpheDidCatchGestureEvent(notification:)), name: .OrpheDidCatchGestureEvent, object: nil)
@@ -58,7 +63,7 @@ class OSCManager:NSObject, OSCServerDelegate{
             try execute {
                 self.server.listen(self.serverPort)
             }
-        } catch let e {
+        } catch _ {
             return false
         }
         return true
@@ -71,13 +76,19 @@ class OSCManager:NSObject, OSCServerDelegate{
     
     func sendSensorValues(orphe:ORPData){
         var address = ""
-        if orphe.side == .left{
-            //TODO: change this in Wekinator
-            //address = "/" + self.uuid + "/LEFT"
-            address =  "/LEFT"
+        let uuid = orphe.uuid!
+        if ((uuid.uuidString == self.FIRST_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID)) {
+            address =  "/firstPlayer"
+            
+        } else if ((orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID)) {
+             address =  "/secondPlayer"
+        }
+        
+        if orphe.side == .left {            
+            address +=  "/LEFT"
         }
         else{
-            address = "/" + self.uuid + "/RIGHT"
+            address += "/RIGHT"
         }
         address += "/sensorValues"
         var args = [Any]()
@@ -93,127 +104,92 @@ class OSCManager:NSObject, OSCServerDelegate{
     }
     
     func sendGesture(orphe:ORPData, gesture:ORPGestureEventArgs){
+        //TODO: document FORMAT: localhost:1234/firstPlayer/LEFT/gesture/heel/timestamp(milliseconds)
+        let timestamp = Int(round(NSDate().timeIntervalSince1970*1000))
         var address = ""
+        let uuid = orphe.uuid!
+        if ((uuid.uuidString == self.FIRST_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID)) {
+            address =  "/firstPlayer"
+            
+        } else if ((orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID)) {
+            address =  "/secondPlayer"
+        }
+        
         if orphe.side == .left{
-            address = "/LEFT"
+            address += "/LEFT"
         }
         else{
-            address = "/RIGHT"
+            address += "/RIGHT"
         }
         address += "/gesture"
         var arguments = [Any]()
+        //TODO: Add Double heel
         switch gesture.getGestureKind() {
-        case .KICK:
+        /*case .KICK:
             arguments.append("KICK")
             arguments.append("")
+            address += "/kick" */
         case .STEP_TOE:
             arguments.append("STEP")
             arguments.append("TOE")
-        case .STEP_FLAT:
+            address += "/toe"
+        /*case .STEP_FLAT:
             arguments.append("STEP")
-            arguments.append("FLAT")
+            arguments.append("FLAT")*/
         case .STEP_HEEL:
             arguments.append("STEP")
             arguments.append("HEEL")
+            address += "/heel"
         default:
             break
         }
         
+        address += "/\(timestamp)"
         arguments.append(gesture.getPower())
         let message = OSCMessage(address: address, arguments: arguments)
         client.send(message, to: clientPath)
     }
     
-    func take(message: OSCMessage) {
-        write(message, withIndent: 0)
-        print("\n")
-    }
-    
-    func write(_ message: OSCMessage, withIndent indent: Int) {
-        let stringIndent = String(repeating: "\t", count: indent)
-       print("\(stringIndent)\(message.address )\n")
-    }
-
-    
-    
-    func handle(_ message: OSCMessage!) {
+   func handle(_ message: OSCMessage!) {
+        //TODO: needed document FORMAT: localhost:1111/firstPlayer/LEFT/gesture/correct
         let oscAddress = message.address.components(separatedBy: "/")
         
         var side = ORPSide.left
-        if oscAddress[1] == "RIGHT"{
+        if oscAddress[2] == "RIGHT" {
             side = .right
         }
-        
-        //TODO: 左右ではなくID指定Orpheを選ぶようにする
-        let orphes = ORPManager.sharedInstance.getOrpheArray(side: side)
+        var uuidString = ""
+        if ( oscAddress[1] == self.FIRST_PLAYER_LEFT_UUID) {
+            uuidString = self.FIRST_PLAYER_LEFT_UUID
+        } else if (oscAddress[1] == self.FIRST_PLAYER_RIGHT_UUID) {
+            uuidString = self.FIRST_PLAYER_RIGHT_UUID
+        } else if (oscAddress[1] == self.SECOND_PLAYER_LEFT_UUID) {
+            uuidString = self.SECOND_PLAYER_LEFT_UUID
+        } else if (oscAddress[1] == self.SECOND_PLAYER_RIGHT_UUID) {
+            uuidString = self.SECOND_PLAYER_RIGHT_UUID
+        }
+        let uuid = UUID(uuidString: uuidString)
+        //let orphes = ORPManager.sharedInstance.getOrpheArray(side: side)
+        //TODO: Make sure they are connected !!
+        let orphe = ORPManager.sharedInstance.getOrpheData(uuid: uuid!)!
         var isNoCommand = false
         var mString = ""
             
-        switch oscAddress[2] {
-        case "triggerLight":
-            for orphe in orphes{
-                orphe.triggerLight(lightNum: message.arguments[3] as! UInt8)
-            }
-            
-        case "triggerLightWithHSVColor":
-            let lightNum = message.arguments[0] as! UInt8
-            let hue = message.arguments[1] as! UInt16
-            let sat = message.arguments[2] as! UInt8
-            let bri = message.arguments[3] as! UInt8
-            
-            for orphe in orphes{
-                orphe.triggerLightWithHSVColor(lightNum: lightNum, hue: hue, saturation: sat, brightness: bri)
-            }
-            
-        case "triggerLightWithRGBColor":
-            let lightNum = message.arguments[0] as! UInt8
-            let red = message.arguments[1] as! UInt8
-            let green = message.arguments[2] as! UInt8
-            let blue = message.arguments[3] as! UInt8
-            
-            for orphe in orphes{
-                orphe.triggerLightWithRGBColor(lightNum: lightNum, red: red, green: green, blue: blue)
-            }
-            
-        case "setLightOn":
-            for orphe in orphes{
-                orphe.switchLight(lightNum: message.arguments[0] as! UInt8, flag: true)
-            }
-            
-        case "setLightOff":
-            for orphe in orphes{
-                orphe.switchLight(lightNum: message.arguments[0] as! UInt8, flag: false)
-            }
-            
-        case "setHSVColor":
-            let lightNum = message.arguments[0] as! UInt8
-            let hue = message.arguments[1] as! UInt16
-            let sat = message.arguments[2] as! UInt8
-            let bri = message.arguments[3] as! UInt8
-            for orphe in orphes{
-                orphe.setColorHSV(lightNum: lightNum, hue: hue, saturation: sat, brightness: bri)
-            }
-            
-        case "setRGBColor":
-            let lightNum = message.arguments[0] as! UInt8
-            let red = message.arguments[1] as! UInt8
-            let green = message.arguments[2] as! UInt8
-            let blue = message.arguments[3] as! UInt8
-            for orphe in orphes{
-                orphe.setColorRGB(lightNum: lightNum, red: red, green: green, blue: blue)
-            }
-            
+        switch oscAddress[4] {
+        case "correct":       
+            mString = "Correct gesture detected! "
+            orphe.triggerLight(lightNum: 9)
+            orphe.triggerLight(lightNum: 9)
         default:
             isNoCommand = true
-            PRINT("No such command")
             break
         }
         
         var args = ""
-        if isNoCommand{
+        if isNoCommand {
             mString = "No such command."
         }
-        else{
+        else {
             for arg in message.arguments{
                 args +=  " " + String(describing: arg)
             }
