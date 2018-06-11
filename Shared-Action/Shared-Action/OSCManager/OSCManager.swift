@@ -26,14 +26,14 @@ class OSCManager:NSObject, OSCServerDelegate{
             clientPath = "udp://" + clientHost + ":" + String(clientPort)
         }
     }
-    
     var clientPort = 1234 {
         didSet{
             clientPath = "udp://" + clientHost + ":" + String(clientPort)
         }
     }
     
-    var serverPort = 4321
+    var serverPort = 1111
+     var uuid = ""
     
     private override init() {
         super.init()
@@ -41,6 +41,7 @@ class OSCManager:NSObject, OSCServerDelegate{
         server.delegate = self
         
         client = OSCClient()
+        startReceive()
         
         NotificationCenter.default.addObserver(self, selector:  #selector(OSCManager.OrpheDidUpdateSensorData(notification:)), name: .OrpheDidUpdateSensorData, object: nil)
         NotificationCenter.default.addObserver(self, selector:  #selector(OSCManager.OrpheDidCatchGestureEvent(notification:)), name: .OrpheDidCatchGestureEvent, object: nil)
@@ -71,16 +72,19 @@ class OSCManager:NSObject, OSCServerDelegate{
     func sendSensorValues(orphe:ORPData){
         var address = ""
         if orphe.side == .left{
-            address = "/LEFT"
+            //TODO: change this in Wekinator
+            //address = "/" + self.uuid + "/LEFT"
+            address =  "/LEFT"
         }
         else{
-            address = "/RIGHT"
+            address = "/" + self.uuid + "/RIGHT"
         }
         address += "/sensorValues"
         var args = [Any]()
         args += orphe.getQuat() as [Any]
         args += orphe.getEuler() as [Any]
         args += orphe.getAcc() as [Any]
+        args += orphe.getAccOfGravity() as [Any]
         args += orphe.getGyro() as [Any]
         args.append(orphe.getMag() as Any)
         args.append(orphe.getShock() as Any)
@@ -119,6 +123,18 @@ class OSCManager:NSObject, OSCServerDelegate{
         let message = OSCMessage(address: address, arguments: arguments)
         client.send(message, to: clientPath)
     }
+    
+    func take(message: OSCMessage) {
+        write(message, withIndent: 0)
+        print("\n")
+    }
+    
+    func write(_ message: OSCMessage, withIndent indent: Int) {
+        let stringIndent = String(repeating: "\t", count: indent)
+       print("\(stringIndent)\(message.address )\n")
+    }
+
+    
     
     func handle(_ message: OSCMessage!) {
         let oscAddress = message.address.components(separatedBy: "/")

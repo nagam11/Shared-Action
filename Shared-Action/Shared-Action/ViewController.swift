@@ -75,8 +75,7 @@ class ViewController: NSViewController {
                 }
             }
             
-        }        
-        self.gestureLabel.stringValue = self.gestures[0]
+        }
     }
     
     override func keyDown(with theEvent: NSEvent) {
@@ -194,6 +193,9 @@ extension  ViewController: ORPManagerDelegate{
         tableView.reloadData()
         updateCellsState()
         self.shoesConnected = true
+        OSCManager.sharedInstance.uuid = self.FIRST_PLAYER_LEFT_UUID
+        
+        self.gestureLabel.stringValue = self.gestures[Int(arc4random_uniform(UInt32(self.gestures.count)))]
         
         orphe.setScene(.sceneSDK)
         orphe.setGestureSensitivity(.high)
@@ -274,8 +276,7 @@ extension  ViewController: ORPManagerDelegate{
     }
 }
 extension ViewController: OSCManagerDelegate{
-    func oscDidReceiveMessage(message:String) {
-        //oscLogTextView.string = message + "\n" + oscLogTextView.string!
+    func oscDidReceiveMessage(message:String) {        
         print(message)
     }
 }
