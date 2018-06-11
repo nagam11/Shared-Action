@@ -151,7 +151,11 @@ class OSCManager:NSObject, OSCServerDelegate{
     }
     
    func handle(_ message: OSCMessage!) {
-        //TODO: needed document FORMAT: localhost:1111/firstPlayer/LEFT/gesture/correct
+    /* TODO: needed document FORMAT: localhost:1111/firstPlayer/LEFT/gesture/correct
+     DEFINED : localhost:1111/firstPlayer/LEFT/gesture/correct
+                localhost:1111/secondPlayer/RIGHT/gesture/correct
+     TESTING: oscurl localhost:1111 /secondPlayer/RIGHT/gesture/correct test
+     */
         let oscAddress = message.address.components(separatedBy: "/")
         
         var side = ORPSide.left
@@ -159,13 +163,13 @@ class OSCManager:NSObject, OSCServerDelegate{
             side = .right
         }
         var uuidString = ""
-        if ( oscAddress[1] == self.FIRST_PLAYER_LEFT_UUID) {
+        if ( oscAddress[1] == "firstPlayer" && side == ORPSide.left) {
             uuidString = self.FIRST_PLAYER_LEFT_UUID
-        } else if (oscAddress[1] == self.FIRST_PLAYER_RIGHT_UUID) {
+        } else if (oscAddress[1] == "firstPlayer" && side == ORPSide.right) {
             uuidString = self.FIRST_PLAYER_RIGHT_UUID
-        } else if (oscAddress[1] == self.SECOND_PLAYER_LEFT_UUID) {
+        } else if (oscAddress[1] == "secondPlayer" && side == ORPSide.left) {
             uuidString = self.SECOND_PLAYER_LEFT_UUID
-        } else if (oscAddress[1] == self.SECOND_PLAYER_RIGHT_UUID) {
+        } else if (oscAddress[1] == "secondPlayer" && side == ORPSide.right) {
             uuidString = self.SECOND_PLAYER_RIGHT_UUID
         }
         let uuid = UUID(uuidString: uuidString)
