@@ -13,6 +13,7 @@ import OSCKit
 class ViewController: NSViewController {
     
     //MARK: UUID Orphe Data
+    // First player: White shoes, Second player: Black shoes
     let FIRST_PLAYER_LEFT_UUID = "DF88A432-0317-4524-8479-CB84AAB5C9A1"
     let FIRST_PLAYER_RIGHT_UUID = "A0A2DB4C-F967-41AF-B4C4-44229AE535F3"
     let SECOND_PLAYER_LEFT_UUID = "2FF443A0-FFF9-4317-8C7F-30321B14B779"
@@ -260,6 +261,7 @@ extension  ViewController: ORPManagerDelegate {
         let shock = orphe.getShock()
         text += "Shock: "+String(shock) + "\n"
         
+        // Current game logic: Each of the two players only use one foot. FP uses the left foot and SP uses the right foot.
         if sideInfo == 0 {
             firstPlayer_leftSensorData.stringValue = "FIRST PLAYER \n LEFT\n\n" + text + "\n" + leftGesture
         }

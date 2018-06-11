@@ -16,6 +16,7 @@ import OSCKit
 class OSCManager:NSObject, OSCServerDelegate{
     
     //MARK: UUID Orphe Data
+    // First player: White shoes, Second player: Black shoes
     let FIRST_PLAYER_LEFT_UUID = "DF88A432-0317-4524-8479-CB84AAB5C9A1"
     let FIRST_PLAYER_RIGHT_UUID = "A0A2DB4C-F967-41AF-B4C4-44229AE535F3"
     let SECOND_PLAYER_LEFT_UUID = "2FF443A0-FFF9-4317-8C7F-30321B14B779"
@@ -37,8 +38,9 @@ class OSCManager:NSObject, OSCServerDelegate{
             clientPath = "udp://" + clientHost + ":" + String(clientPort)
         }
     }
-    
     var serverPort = 1111
+    // Save the last detected heel in order to detect double heels.
+    var lastDetectedHeel = 0
     
     private override init() {
         super.init()
@@ -46,9 +48,8 @@ class OSCManager:NSObject, OSCServerDelegate{
         server.delegate = self
         
         client = OSCClient()
-        self.startReceive()
+        let _ = self.startReceive()
         
-        NotificationCenter.default.addObserver(self, selector:  #selector(OSCManager.OrpheDidUpdateSensorData(notification:)), name: .OrpheDidUpdateSensorData, object: nil)
         NotificationCenter.default.addObserver(self, selector:  #selector(OSCManager.OrpheDidCatchGestureEvent(notification:)), name: .OrpheDidCatchGestureEvent, object: nil)
         
     }
@@ -58,7 +59,6 @@ class OSCManager:NSObject, OSCServerDelegate{
     }
     
     func startReceive()->Bool{
-        
         do {
             try execute {
                 self.server.listen(self.serverPort)
@@ -67,45 +67,19 @@ class OSCManager:NSObject, OSCServerDelegate{
             return false
         }
         return true
-        
     }
     
     func execute(_ tryBlock: () -> ()) throws {
         try ObjC_Exception.catch(try: tryBlock)
     }
     
-    func sendSensorValues(orphe:ORPData){
-        var address = ""
-        let uuid = orphe.uuid!
-        if ((uuid.uuidString == self.FIRST_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID)) {
-            address =  "/firstPlayer"
-            
-        } else if ((orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID)) {
-             address =  "/secondPlayer"
-        }
-        
-        if orphe.side == .left {            
-            address +=  "/LEFT"
-        }
-        else{
-            address += "/RIGHT"
-        }
-        address += "/sensorValues"
-        var args = [Any]()
-        args += orphe.getQuat() as [Any]
-        args += orphe.getEuler() as [Any]
-        args += orphe.getAcc() as [Any]
-        args += orphe.getAccOfGravity() as [Any]
-        args += orphe.getGyro() as [Any]
-        args.append(orphe.getMag() as Any)
-        args.append(orphe.getShock() as Any)
-        let message = OSCMessage(address: address, arguments: args)
-        client.send(message, to: clientPath)
-    }
-    
+    /* This method detectes gestures from Orphe and sends following information to the game server:
+        player: firstPlayer or secondPlayer, shoe: LEFT or RIGHT, name of gesture: toe or heel or d_heel, timestamp in milliseconds.
+        Example: localhost:1234/firstPlayer/LEFT/gesture/heel/timestamp(milliseconds)
+     */
+    //TODO: Sometimes STEP_FLAT shows also STEP_HEEL and may interfere. Take care server-side if performed out of tune => don't blink rainbow!
     func sendGesture(orphe:ORPData, gesture:ORPGestureEventArgs){
-        //TODO: document FORMAT: localhost:1234/firstPlayer/LEFT/gesture/heel/timestamp(milliseconds)
-        let timestamp = Int(round(NSDate().timeIntervalSince1970*1000))
+        var timestamp = Int(round(NSDate().timeIntervalSince1970*1000))
         var address = ""
         let uuid = orphe.uuid!
         if ((uuid.uuidString == self.FIRST_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID)) {
@@ -123,39 +97,46 @@ class OSCManager:NSObject, OSCServerDelegate{
         }
         address += "/gesture"
         var arguments = [Any]()
-        //TODO: Add Double heel
         switch gesture.getGestureKind() {
-        /*case .KICK:
-            arguments.append("KICK")
-            arguments.append("")
-            address += "/kick" */
         case .STEP_TOE:
             arguments.append("STEP")
             arguments.append("TOE")
             address += "/toe"
-        /*case .STEP_FLAT:
-            arguments.append("STEP")
-            arguments.append("FLAT")*/
         case .STEP_HEEL:
             arguments.append("STEP")
             arguments.append("HEEL")
-            address += "/heel"
+            if(self.lastDetectedHeel == 0){
+                self.lastDetectedHeel = timestamp
+                address += "/heel"
+            } else {
+                let difference_between_taps = timestamp - self.lastDetectedHeel
+                // Detect a double heel if the timestamps between two heel gestures is max 800 ms.
+                if (difference_between_taps <= 800){
+                    arguments.append("DOUBLE HEEL")
+                    address += "/d_heel"
+                    // Timestamp of double heel is the medium of the two detected timestamps.
+                    self.lastDetectedHeel = (self.lastDetectedHeel + timestamp) / 2
+                    timestamp = self.lastDetectedHeel
+                } else {
+                    self.lastDetectedHeel = timestamp
+                    address += "/heel"
+                }
+            }
         default:
             break
         }
-        
         address += "/\(timestamp)"
         arguments.append(gesture.getPower())
         let message = OSCMessage(address: address, arguments: arguments)
         client.send(message, to: clientPath)
     }
     
-   func handle(_ message: OSCMessage!) {
-    /* TODO: needed document FORMAT: localhost:1111/firstPlayer/LEFT/gesture/correct
-     DEFINED : localhost:1111/firstPlayer/LEFT/gesture/correct
+    /* This method handles incoming requests from the server. The server message needs adhere to following naming constraints. There is only the left shoe for the first player and only the right shoe for the second player.
+        Examples: localhost:1111/firstPlayer/LEFT/gesture/correct
                 localhost:1111/secondPlayer/RIGHT/gesture/correct
-     TESTING: oscurl localhost:1111 /secondPlayer/RIGHT/gesture/correct test
+        Testing: oscurl localhost:1111 /secondPlayer/RIGHT/gesture/correct test
      */
+    func handle(_ message: OSCMessage!) {
         let oscAddress = message.address.components(separatedBy: "/")
         
         var side = ORPSide.left
@@ -172,16 +153,18 @@ class OSCManager:NSObject, OSCServerDelegate{
         } else if (oscAddress[1] == "secondPlayer" && side == ORPSide.right) {
             uuidString = self.SECOND_PLAYER_RIGHT_UUID
         }
-        let uuid = UUID(uuidString: uuidString)
-        //let orphes = ORPManager.sharedInstance.getOrpheArray(side: side)
-        //TODO: Make sure they are connected !!
-        let orphe = ORPManager.sharedInstance.getOrpheData(uuid: uuid!)!
+        guard let uuid = UUID(uuidString: uuidString) else {
+            print("Shoes may not be connected. Please check!")
+            return
+        }
+
+        let orphe = ORPManager.sharedInstance.getOrpheData(uuid: uuid)!
         var isNoCommand = false
         var mString = ""
-            
+        
         switch oscAddress[4] {
         case "correct":       
-            mString = "Correct gesture detected! "
+            mString = "Correct gesture detected! RAINBOWWWW "
             orphe.triggerLight(lightNum: 9)
             orphe.triggerLight(lightNum: 9)
         default:
@@ -203,12 +186,6 @@ class OSCManager:NSObject, OSCServerDelegate{
     }
     
     //MARK: - Notifications
-    @objc func OrpheDidUpdateSensorData(notification:Notification){
-        guard let userInfo = notification.userInfo else {return}
-        let orphe = userInfo[OrpheDataUserInfoKey] as! ORPData
-        sendSensorValues(orphe: orphe)
-    }
-    
     @objc func OrpheDidCatchGestureEvent(notification:Notification){
         guard let userInfo = notification.userInfo else {return}
         let gestureEvent = userInfo[OrpheGestureUserInfoKey] as! ORPGestureEventArgs
