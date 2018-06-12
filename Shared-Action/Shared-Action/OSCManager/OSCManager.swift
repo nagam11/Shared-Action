@@ -16,7 +16,7 @@ import OSCKit
 class OSCManager:NSObject, OSCServerDelegate{
     
     //MARK: UUID Orphe Data
-    // First player: White shoes, Second player: Black shoes
+    // Real player: White shoes, Partner player: Black shoes
     let FIRST_PLAYER_LEFT_UUID = "DF88A432-0317-4524-8479-CB84AAB5C9A1"
     let FIRST_PLAYER_RIGHT_UUID = "A0A2DB4C-F967-41AF-B4C4-44229AE535F3"
     let SECOND_PLAYER_LEFT_UUID = "2FF443A0-FFF9-4317-8C7F-30321B14B779"
@@ -41,6 +41,7 @@ class OSCManager:NSObject, OSCServerDelegate{
     var serverPort = 1111
     // Save the last detected heel in order to detect double heels.
     var lastDetectedHeel = 0
+    var newHeelDetected = false
     
     private override init() {
         super.init()
@@ -75,51 +76,78 @@ class OSCManager:NSObject, OSCServerDelegate{
     
     /* This method detectes gestures from Orphe and sends following information to the game server:
         player: firstPlayer or secondPlayer, shoe: LEFT or RIGHT, name of gesture: toe or heel or d_heel, timestamp in milliseconds.
-        Example: localhost:1234/firstPlayer/LEFT/gesture/heel/timestamp(milliseconds)
+        Example: localhost:1234/real/LEFT/gesture/heel/timestamp(milliseconds)
      */
-    //TODO: Sometimes STEP_FLAT shows also STEP_HEEL and may interfere. Take care server-side if performed out of tune => don't blink rainbow!
+    //TODO: Sometimes STEP_FLAT shows also STEP_HEEL and may interfere. Take care server-side if performed out of tune => don't blink rainbow! Maybe check power ?!
     func sendGesture(orphe:ORPData, gesture:ORPGestureEventArgs){
         var timestamp = Int(round(NSDate().timeIntervalSince1970*1000))
         var address = ""
+        var debug = ""
         let uuid = orphe.uuid!
         if ((uuid.uuidString == self.FIRST_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID)) {
-            address =  "/firstPlayer"
+            address =  "/real"
+            debug += "REAL player "
             
         } else if ((orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID)) {
-            address =  "/secondPlayer"
+            address =  "/partner"
+            debug += "PARTNER player "
         }
         
         if orphe.side == .left{
             address += "/LEFT"
+            debug += "with LEFT foot "
         }
         else{
             address += "/RIGHT"
+            debug += "with RIGHT foot "
         }
         address += "/gesture"
         var arguments = [Any]()
-        switch gesture.getGestureKind() {
+        debug += "performed "
+        let kind = gesture.getGestureKind()
+        switch kind {
         case .STEP_TOE:
             arguments.append("STEP")
             arguments.append("TOE")
             address += "/toe"
+            debug += "TOE gesture "
         case .STEP_HEEL:
             arguments.append("STEP")
             arguments.append("HEEL")
             if(self.lastDetectedHeel == 0){
                 self.lastDetectedHeel = timestamp
-                address += "/heel"
             } else {
                 let difference_between_taps = timestamp - self.lastDetectedHeel
                 // Detect a double heel if the timestamps between two heel gestures is max 800 ms.
-                if (difference_between_taps <= 800){
-                    arguments.append("DOUBLE HEEL")
-                    address += "/d_heel"
+                if (difference_between_taps <= 800) {
                     // Timestamp of double heel is the medium of the two detected timestamps.
                     self.lastDetectedHeel = (self.lastDetectedHeel + timestamp) / 2
                     timestamp = self.lastDetectedHeel
+                    self.newHeelDetected = true
                 } else {
                     self.lastDetectedHeel = timestamp
-                    address += "/heel"
+                    // Check async. if a double heel happens 0.8 seconds later.
+                    let checkingDHQueue = DispatchQueue(label: "checkingGHQueue", attributes: .concurrent)
+                    checkingDHQueue.async {
+                        usleep(810000) //will sleep for .81 seconds
+                        if (self.newHeelDetected) {
+                            debug += "DOUBLE HEEL gesture "
+                            address += "/d_heel"
+                            address += "/\(timestamp)"
+                            arguments.append(gesture.getPower())
+                            let message = OSCMessage(address: address, arguments: arguments)
+                            self.client.send(message, to: self.clientPath)
+                            print(debug)
+                        } else {
+                            debug += "NORMAL HEEL gesture "
+                            address += "/heel"
+                            address += "/\(timestamp)"
+                            arguments.append(gesture.getPower())
+                            let message = OSCMessage(address: address, arguments: arguments)
+                            self.client.send(message, to: self.clientPath)
+                            print(debug)
+                        }
+                    }
                 }
             }
         default:
@@ -128,7 +156,10 @@ class OSCManager:NSObject, OSCServerDelegate{
         address += "/\(timestamp)"
         arguments.append(gesture.getPower())
         let message = OSCMessage(address: address, arguments: arguments)
-        client.send(message, to: clientPath)
+        if (kind == .STEP_TOE) {
+            client.send(message, to: clientPath)
+            print(debug)
+        }
     }
     
     /* This method handles incoming requests from the server. The server message needs adhere to following naming constraints. There is only the left shoe for the first player and only the right shoe for the second player.
@@ -144,13 +175,13 @@ class OSCManager:NSObject, OSCServerDelegate{
             side = .right
         }
         var uuidString = ""
-        if ( oscAddress[1] == "firstPlayer" && side == ORPSide.left) {
+        if ( oscAddress[1] == "real" && side == ORPSide.left) {
             uuidString = self.FIRST_PLAYER_LEFT_UUID
-        } else if (oscAddress[1] == "firstPlayer" && side == ORPSide.right) {
+        } else if (oscAddress[1] == "real" && side == ORPSide.right) {
             uuidString = self.FIRST_PLAYER_RIGHT_UUID
-        } else if (oscAddress[1] == "secondPlayer" && side == ORPSide.left) {
+        } else if (oscAddress[1] == "partner" && side == ORPSide.left) {
             uuidString = self.SECOND_PLAYER_LEFT_UUID
-        } else if (oscAddress[1] == "secondPlayer" && side == ORPSide.right) {
+        } else if (oscAddress[1] == "partner" && side == ORPSide.right) {
             uuidString = self.SECOND_PLAYER_RIGHT_UUID
         }
         guard let uuid = UUID(uuidString: uuidString) else {
