@@ -228,7 +228,7 @@
 				TargetAttributes = {
 					E6117CFF1E0A5A8200A2C89F = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 6WUX73WU7P;
+						DevelopmentTeam = UVDH2TQX74;
 						ProvisioningStyle = Automatic;
 					};
 					E6117D101E0A5A8200A2C89F = {
@@ -496,7 +496,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 6WUX73WU7P;
+				DEVELOPMENT_TEAM = UVDH2TQX74;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -524,7 +524,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 6WUX73WU7P;
+				DEVELOPMENT_TEAM = UVDH2TQX74;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -29,7 +29,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var firstPlayerRightConnected: NSTextField!
     @IBOutlet weak var secondPlayerLeftConnected: NSTextField!
     @IBOutlet weak var secondPlayerRightConnected: NSTextField!
-    @IBOutlet weak var gestureDetectedLabel: NSTextField!
+
     var rssiTimer: Timer?
     
     var leftGesture = ""

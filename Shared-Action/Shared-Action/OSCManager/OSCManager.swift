@@ -125,6 +125,7 @@ class OSCManager:NSObject, OSCServerDelegate{
                     timestamp = self.lastDetectedHeel
                     self.newHeelDetected = true
                 } else {
+                    self.newHeelDetected = false
                     self.lastDetectedHeel = timestamp
                     // Check async. if a double heel happens 0.8 seconds later.
                     let checkingDHQueue = DispatchQueue(label: "checkingGHQueue", attributes: .concurrent)
@@ -223,5 +224,4 @@ class OSCManager:NSObject, OSCServerDelegate{
         let orphe = userInfo[OrpheDataUserInfoKey] as! ORPData
         sendGesture(orphe: orphe, gesture: gestureEvent)
     }
-    
 }
