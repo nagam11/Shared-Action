@@ -41,7 +41,9 @@ class OSCManager:NSObject, OSCServerDelegate{
     var serverPort = 1111
     // Save the last detected heel in order to detect double heels.
     var lastDetectedHeel = 0
+    var lastDetectedToe = 0
     var newHeelDetected = false
+    var newToeDetected = false
     
     private override init() {
         super.init()
@@ -75,12 +77,13 @@ class OSCManager:NSObject, OSCServerDelegate{
     }
     
     /* This method detectes gestures from Orphe and sends following information to the game server:
-        player: firstPlayer or secondPlayer, shoe: LEFT or RIGHT, name of gesture: toe or heel or d_heel, timestamp in milliseconds.
-        Example: localhost:1234/real/LEFT/gesture/heel/timestamp(milliseconds)
+        player: firstPlayer or secondPlayer, shoe: L or R, name of gesture: T or H or DH, timestamp in milliseconds.
+        Example: localhost:1234/real/gesture/LH/timestamp(milliseconds)
      */
     //TODO: Sometimes STEP_FLAT shows also STEP_HEEL and may interfere. Take care server-side if performed out of tune => don't blink rainbow! Maybe check power ?!
     func sendGesture(orphe:ORPData, gesture:ORPGestureEventArgs){
         var timestamp = Int(round(NSDate().timeIntervalSince1970*1000))
+        var foot = ""
         var address = ""
         var debug = ""
         let uuid = orphe.uuid!
@@ -94,11 +97,13 @@ class OSCManager:NSObject, OSCServerDelegate{
         }
         
         if orphe.side == .left{
-            address += "/LEFT"
+            //address += "/L"
+            foot = "L"
             debug += "with LEFT foot "
         }
         else{
-            address += "/RIGHT"
+            //address += "/R"
+            foot = "R"
             debug += "with RIGHT foot "
         }
         address += "/gesture"
@@ -109,8 +114,43 @@ class OSCManager:NSObject, OSCServerDelegate{
         case .STEP_TOE:
             arguments.append("STEP")
             arguments.append("TOE")
-            address += "/toe"
-            debug += "TOE gesture "
+            if(self.lastDetectedToe == 0){
+                self.lastDetectedToe = timestamp
+            } else {
+                let difference_between_taps = timestamp - self.lastDetectedToe
+                // Detect a double toe if the timestamps between two toe gestures is max 800 ms.
+                if (difference_between_taps <= 800) {
+                    // Timestamp of double toe is the medium of the two detected timestamps.
+                    self.lastDetectedToe = (self.lastDetectedToe + timestamp) / 2
+                    timestamp = self.lastDetectedToe
+                    self.newToeDetected = true
+                } else {
+                    self.newToeDetected = false
+                    self.lastDetectedToe = timestamp
+                    // Check async. if a double toe happens 0.8 seconds later.
+                    let checkingDHQueue = DispatchQueue(label: "checkingGHQueue", attributes: .concurrent)
+                    checkingDHQueue.async {
+                        usleep(810000) //will sleep for .81 seconds
+                        if (self.newToeDetected) {
+                            debug += "DOUBLE TOE gesture "
+                            address += foot + "/DT"
+                            address += "/\(timestamp)"
+                            arguments.append(gesture.getPower())
+                            let message = OSCMessage(address: address, arguments: arguments)
+                            self.client.send(message, to: self.clientPath)
+                            print(debug)
+                        } else {
+                            debug += "NORMAL TOE gesture "
+                            address += foot + "/T"
+                            address += "/\(timestamp)"
+                            arguments.append(gesture.getPower())
+                            let message = OSCMessage(address: address, arguments: arguments)
+                            self.client.send(message, to: self.clientPath)
+                            print(debug)
+                        }
+                    }
+                }
+            }
         case .STEP_HEEL:
             arguments.append("STEP")
             arguments.append("HEEL")
@@ -133,7 +173,7 @@ class OSCManager:NSObject, OSCServerDelegate{
                         usleep(810000) //will sleep for .81 seconds
                         if (self.newHeelDetected) {
                             debug += "DOUBLE HEEL gesture "
-                            address += "/d_heel"
+                            address += foot + "/DH"
                             address += "/\(timestamp)"
                             arguments.append(gesture.getPower())
                             let message = OSCMessage(address: address, arguments: arguments)
@@ -141,7 +181,7 @@ class OSCManager:NSObject, OSCServerDelegate{
                             print(debug)
                         } else {
                             debug += "NORMAL HEEL gesture "
-                            address += "/heel"
+                            address += foot + "/H"
                             address += "/\(timestamp)"
                             arguments.append(gesture.getPower())
                             let message = OSCMessage(address: address, arguments: arguments)
@@ -154,16 +194,10 @@ class OSCManager:NSObject, OSCServerDelegate{
         default:
             break
         }
-        address += "/\(timestamp)"
-        arguments.append(gesture.getPower())
-        let message = OSCMessage(address: address, arguments: arguments)
-        if (kind == .STEP_TOE) {
-            client.send(message, to: clientPath)
-            print(debug)
-        }
     }
     
-    /* This method handles incoming requests from the server. The server message needs adhere to following naming constraints. There is only the left shoe for the first player and only the right shoe for the second player.
+    /* CURRENTLY NOT NEEDED
+     This method handles incoming requests from the server. The server message needs adhere to following naming constraints. There is only the left shoe for the first player and only the right shoe for the second player.
         Examples: localhost:1111/firstPlayer/LEFT/gesture/correct
                 localhost:1111/secondPlayer/RIGHT/gesture/correct
         Testing: oscurl localhost:1111 /secondPlayer/RIGHT/gesture/correct test

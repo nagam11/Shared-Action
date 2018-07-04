@@ -8,7 +8,7 @@
 
 import Cocoa
 import Orphe
-import OSCKit
+//import OSCKit
 
 class ViewController: NSViewController {
     
@@ -76,6 +76,11 @@ class ViewController: NSViewController {
         if let lightNum:UInt8 = UInt8(theEvent.characters!){
             for orp in ORPManager.sharedInstance.connectedORPDataArray{
                 orp.triggerLight(lightNum: lightNum)
+                orp.triggerLight(lightNum: lightNum)
+                orp.triggerLight(lightNum: lightNum)
+               // orp.triggerLightWithRGBColor(lightNum: lightNum, red: 165, green: 34, blue: 197)
+               // orp.setColorRGB(lightNum: lightNum, red: 165, green: 34, blue: 197)
+                //orp.switchLight(lightNum: 1, flag: false)
             }
         }
     }
