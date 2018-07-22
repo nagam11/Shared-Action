@@ -195,20 +195,33 @@ extension  ViewController: ORPManagerDelegate {
     }
     
     func orpheDidConnect(orphe:ORPData) {
+        //MARK: Orphe framework bug changing sides of shoes
         print("\n Connected with DEVICE \(orphe.uuid!).")
         if (orphe.uuid!.uuidString == self.FIRST_PLAYER_LEFT_UUID){
             self.firstPlayerLeftConnected.stringValue = "connected"
             self.firstPlayerLeftConnected.textColor = NSColor.green
+            if (orphe.side == .right){
+                orphe.switchToOppositeSide()
+            }
         } else if (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID) {
             self.firstPlayerRightConnected.stringValue = "connected"
             self.firstPlayerRightConnected.textColor = NSColor.green
+            if (orphe.side == .left){
+                orphe.switchToOppositeSide()
+            }
         } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) {
             self.secondPlayerLeftConnected.stringValue = "connected"
             self.secondPlayerLeftConnected.textColor = NSColor.green
+            if (orphe.side == .right){
+                orphe.switchToOppositeSide()
+            }
         } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID) {
             self.secondPlayerRightConnected.stringValue = "connected"
             self.secondPlayerRightConnected.textColor = NSColor.green
-        }        
+            if (orphe.side == .left){
+                orphe.switchToOppositeSide()
+            }
+        }
         tableView.reloadData()
         updateCellsState()
         
@@ -220,7 +233,7 @@ extension  ViewController: ORPManagerDelegate {
         PRINT("didUpdateOrpheInfo")
         for orp in ORPManager.sharedInstance.connectedORPDataArray {
             if orp != orphe && orp.side == orphe.side{
-                orp.switchToOppositeSide()
+               // orp.switchToOppositeSide()
             }
         }
     }
@@ -267,11 +280,14 @@ extension  ViewController: ORPManagerDelegate {
         text += "Shock: "+String(shock) + "\n"
         
         // Current game logic: Each of the two players only use one foot. FP uses the left foot and SP uses the right foot.
-        if sideInfo == 0 {
-            firstPlayer_leftSensorData.stringValue = "REAL PLAYER \n LEFT\n\n" + text + "\n" + leftGesture
-        }
-        else {
-            secondPlayer_rightSensorData.stringValue = "PARTNER PLAYER \n RIGHT\n\n" + text + "\n" + rightGesture
+        if (orphe.uuid!.uuidString == self.FIRST_PLAYER_LEFT_UUID && sideInfo == 0){
+            firstPlayer_leftSensorData.stringValue = "EXPERT \n LEFT\n\n" + text + "\n"
+        } else if (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID) {
+            firstPlayer_rightSensorData.stringValue = "EXPERT \n RIGHT\n\n" + text + "\n"
+        } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID && sideInfo == 0) {
+            secondPlayer_leftSensorData.stringValue = "RECIPIENT \n LEFT\n\n" + text + "\n"
+        } else if (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID) {
+            secondPlayer_rightSensorData.stringValue = "RECIPIENT \n RIGHT\n\n" + text + "\n"
         }
     }
     
