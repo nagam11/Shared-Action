@@ -88,15 +88,18 @@ class OSCManager:NSObject, OSCServerDelegate{
         var foot = ""
         var debug = ""
         let uuid = orphe.uuid!
+         var ad = ""
         if ((uuid.uuidString == self.FIRST_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID)) {
-            address =  "/real"
+            ad =  "/real"
             debug += "REAL player "
+            return
             
         } else if ((orphe.uuid!.uuidString == self.SECOND_PLAYER_LEFT_UUID) || (orphe.uuid!.uuidString == self.SECOND_PLAYER_RIGHT_UUID)) {
-            address =  "/partner"
+            ad =  "/partner"
             debug += "PARTNER player "
+            //return
         }
-        address += "/gesture"
+        ad  += "/gesture"
         if orphe.side == .left{
             //address += "/L"
             foot = "/L"
@@ -106,6 +109,7 @@ class OSCManager:NSObject, OSCServerDelegate{
             //address += "/R"
             foot = "/R"
             debug += "with RIGHT foot "
+            
         }
         
         var arguments = [Any]()
@@ -134,20 +138,20 @@ class OSCManager:NSObject, OSCServerDelegate{
                         usleep(810000) //will sleep for .81 seconds
                         if (self.newToeDetected) {
                             debug += "DOUBLE TOE gesture "
-                            self.address += foot + "DT"
-                            self.address += "/\(timestamp)"
+                            ad += foot + "DT"
+                            ad += "/\(timestamp)"
                             arguments.append(gesture.getPower())
-                            let message = OSCMessage(address: self.address, arguments: arguments)
-                             self.sendHTTPMessage()
+                            let message = OSCMessage(address: ad, arguments: arguments)
+                            self.sendHTTPMessage(ad: ad)
                             //self.client.send(message, to: self.clientPath)
                             print(debug)
                         } else {
                             debug += "NORMAL TOE gesture "
-                            self.address += foot + "T"
-                            self.address += "/\(timestamp)"
+                            ad += foot + "T"
+                            ad += "/\(timestamp)"
                             arguments.append(gesture.getPower())
-                            let message = OSCMessage(address: self.address, arguments: arguments)
-                             self.sendHTTPMessage()
+                            let message = OSCMessage(address: ad, arguments: arguments)
+                            self.sendHTTPMessage(ad: ad)
                             //self.client.send(message, to: self.clientPath)
                             print(debug)
                         }
@@ -176,20 +180,20 @@ class OSCManager:NSObject, OSCServerDelegate{
                         usleep(810000) //will sleep for .81 seconds
                         if (self.newHeelDetected) {
                             debug += "DOUBLE HEEL gesture "
-                            self.address += foot + "DH"
-                            self.address += "/\(timestamp)"
+                            ad += foot + "DH"
+                            ad += "/\(timestamp)"
                             arguments.append(gesture.getPower())
-                            let message = OSCMessage(address: self.address, arguments: arguments)
-                             self.sendHTTPMessage()
+                            let message = OSCMessage(address: ad, arguments: arguments)
+                            self.sendHTTPMessage(ad: ad)
                             //self.client.send(message, to: self.clientPath)
                             print(debug)
                         } else {
                             debug += "NORMAL HEEL gesture "
-                            self.address += foot + "H"
-                            self.address += "/\(timestamp)"
+                             ad += foot + "H"
+                           ad += "/\(timestamp)"
                             arguments.append(gesture.getPower())
-                            let message = OSCMessage(address: self.address, arguments: arguments)
-                             self.sendHTTPMessage()
+                            //let message = OSCMessage(address: ad, arguments: arguments)
+                            self.sendHTTPMessage(ad: ad)
                             //self.client.send(message, to: self.clientPath)
                             print(debug)
                         }
@@ -201,18 +205,18 @@ class OSCManager:NSObject, OSCServerDelegate{
         }
     }
     
-    func sendHTTPMessage(){
-        let url = URL(string: "\(self.clientPath_Right)\(self.address)")
+    func sendHTTPMessage(ad: String){
+        let url = URL(string: "\(self.clientPath_Right)\(ad)")
         print(url?.absoluteString as String!)
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
             guard error == nil else {
                 print("ERROR : \(error!)")
                 return
             }
-            do {print("Message: \(self.address) was sent")}
+            do {print("Message: \(ad) was sent")}
         }
         task.resume()
-        self.address = ""
+        //self.address = ""
     }
     
     /* CURRENTLY NOT NEEDED
