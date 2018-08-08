@@ -8,7 +8,6 @@
 
 import Cocoa
 import Orphe
-//import OSCKit
 
 class ViewController: NSViewController {
     
@@ -78,9 +77,9 @@ class ViewController: NSViewController {
                 orp.triggerLight(lightNum: lightNum)
                 orp.triggerLight(lightNum: lightNum)
                 orp.triggerLight(lightNum: lightNum)
-               // orp.triggerLightWithRGBColor(lightNum: lightNum, red: 165, green: 34, blue: 197)
-               // orp.setColorRGB(lightNum: lightNum, red: 165, green: 34, blue: 197)
-                //orp.switchLight(lightNum: 1, flag: false)
+                orp.triggerLightWithRGBColor(lightNum: lightNum, red: 165, green: 34, blue: 197)
+                orp.setColorRGB(lightNum: lightNum, red: 165, green: 34, blue: 197)
+                orp.switchLight(lightNum: 1, flag: false)
             }
         }
     }
@@ -195,7 +194,7 @@ extension  ViewController: ORPManagerDelegate {
     }
     
     func orpheDidConnect(orphe:ORPData) {
-        //MARK: Orphe framework bug changing sides of shoes
+        // Fix for Orphe framework bug changing sides of shoes
         print("\n Connected with DEVICE \(orphe.uuid!).")
         if (orphe.uuid!.uuidString == self.FIRST_PLAYER_LEFT_UUID){
             self.firstPlayerLeftConnected.stringValue = "connected"
@@ -279,7 +278,6 @@ extension  ViewController: ORPManagerDelegate {
         let shock = orphe.getShock()
         text += "Shock: "+String(shock) + "\n"
         
-        // Current game logic: Each of the two players only use one foot. FP uses the left foot and SP uses the right foot.
         if (orphe.uuid!.uuidString == self.FIRST_PLAYER_LEFT_UUID && sideInfo == 0){
             firstPlayer_leftSensorData.stringValue = "EXPERT \n LEFT\n\n" + text + "\n"
         } else if (orphe.uuid!.uuidString == self.FIRST_PLAYER_RIGHT_UUID) {
@@ -292,7 +290,7 @@ extension  ViewController: ORPManagerDelegate {
     }
     
     /*
-     This method describes the feedback shown to the user when he performs the gestures. Regardless of the game, the shoes always show feedback.
+     This method describes the feedback shown to the user when he performs the gestures. Regardless of their performance, the shoes always show feedback upon gesture.
      */
     func orpheDidCatchGestureEvent(gestureEvent:ORPGestureEventArgs, orphe:ORPData) {
         let side = orphe.side
