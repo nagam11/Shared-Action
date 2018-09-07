@@ -1,0 +1,11 @@
+framework module Orphe {
+  umbrella header "Orphe.h"
+
+  export *
+  module * { export * }
+}
+
+module Orphe.Swift {
+    header "Orphe-Swift.h"
+    requires objc
+}

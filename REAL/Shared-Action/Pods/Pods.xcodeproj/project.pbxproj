@@ -1,0 +1,855 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0693FA738DFCC06899A841C24BFE6E72 /* OSCServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 971173DCAFC053622ED0EB7F2044EF65 /* OSCServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0E29BFED3333BB3C8E6E97C9DBC90B00 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877A0702173AC4FCDFFEBAAE2E7A9152 /* CoreServices.framework */; };
+		173B400F21D9658A660602F7BD9E8226 /* OscException.h in Headers */ = {isa = PBXBuildFile; fileRef = 4139178A2204B3BCA7E32A92F4401086 /* OscException.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		1CCD1006B0850BD0E1F7D205D048650D /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5780C355502C167D60B20F8931FB1F65 /* CocoaAsyncSocket.framework */; };
+		1D272549864488B39AF843CBC578ABB2 /* OscOutboundPacketStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 85C91166F7984FC8AD03FF5EC091096C /* OscOutboundPacketStream.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		24C6B2ADF2D07971E927479D8F60EFB1 /* Pods-Shared-Action-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 51E0B05888FF6EEF31B449E96E1C2C23 /* Pods-Shared-Action-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3ABC0ACC268F04A2C49E4BA3F69EDFD1 /* OSCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8238E0F3DCF901A737C53907B8178FAA /* OSCKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3D07F17DC33F3E8FD28A0CB0522F5C16 /* OSCProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = B146253372B29F44AA4663EDD48FB033 /* OSCProtocol.mm */; };
+		3E9086DDE3E00DD4BF1540099DB47997 /* Pods-Shared-Action-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D96442E0FD6E99E4AE88EF1D1164E7B1 /* Pods-Shared-Action-dummy.m */; };
+		4AB8B0F353AE7D609EB0434381EEAD8E /* OSCProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A52FD15E01EB12E01722C96D7B278A6 /* OSCProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C73D8E3518F0D5C0CA5F4B3E5D7F90A /* OSCMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = A264D0497F09D4879ED033B0392294E7 /* OSCMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C857190FB7DA56F5777E5684E9D5983 /* OscTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 25F4CEB6DE17A0520F0D9CF7B4B51570 /* OscTypes.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4D788943A39078871A704EE569A921A9 /* MessageMappingOscPacketListener.h in Headers */ = {isa = PBXBuildFile; fileRef = B81705F11576FB01BE116D1129758BF8 /* MessageMappingOscPacketListener.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		58C60378E9552E4479224892E17B1490 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9070596153500EBE5330C2C7BD5D57FF /* Cocoa.framework */; };
+		5EB1B262F845459BB2DB2E84A8810CAE /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82CB8710621BD2BDC04BD6FBEDBE6582 /* OscOutboundPacketStream.cpp */; };
+		63C78BDC7D67D1E287FBE9AA3C507E7D /* OSCKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887E2D3FDDE1F5C98F16B9FFD39FC27 /* OSCKit-dummy.m */; };
+		721F36E4CDAB242714D13493FB4CE681 /* OscHostEndianness.h in Headers */ = {isa = PBXBuildFile; fileRef = D38E55FF1286F23CA0A4C4A388B6AB6F /* OscHostEndianness.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		76D9FBD03A0D72E60DCCC3D5F15D3174 /* CocoaAsyncSocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC7751DE956BBEB2563B4B52972CB2F /* CocoaAsyncSocket-dummy.m */; };
+		7FDA3DA6F6AFF14E83FDF8C444F76100 /* OSCClient.h in Headers */ = {isa = PBXBuildFile; fileRef = B25410473DAE67E9BD032D209DE374BA /* OSCClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		812AB57F4E03756F2EA43B076C0617E7 /* OscPacketListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 717DBD9915689F50CDFCE3237A05E16F /* OscPacketListener.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		873C70DB42C386C010504549A1024629 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DC11316D27CAA912DD5A03F1B460EDD /* OscTypes.cpp */; };
+		98C866918C7B03F3FC1400D0625B2AFB /* OSCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 810F781237879C8378AC40326BBF0A12 /* OSCMessage.m */; };
+		A882891E5A89CADF96C2CA79606409CA /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C1C7B68418C66E2E0212FCF584BADD4 /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AC7DC2A21843CD99040DCD79FF3BE91B /* GCDAsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5198CA689B26B63663740BE30DBE12E4 /* GCDAsyncUdpSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B142AA784A6D9FBB4D00E97B4A705CC6 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834A21753186EAB73E48CDD40D270FDF /* OscPrintReceivedElements.cpp */; };
+		C53CB621C46CA1F6B3670ED0F9861D76 /* OscReceivedElements.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FE4E4400E59EAAC37FCEF694B542DE5 /* OscReceivedElements.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		C72E64802C5BF685D3A6E2E7D82596D7 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D67AE944573C3B2C9D70AD4EED1C7 /* GCDAsyncSocket.m */; };
+		CBB4B46A204478364DAEF2ECABF647FC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9070596153500EBE5330C2C7BD5D57FF /* Cocoa.framework */; };
+		D37A91258103DEFDFAFF55A001D97D02 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B7164B8C8E961769ACDF335F31419457 /* GCDAsyncUdpSocket.m */; };
+		D74151E82696AE966F792828BB81DB6F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9070596153500EBE5330C2C7BD5D57FF /* Cocoa.framework */; };
+		D74EF48EF0A040B12B5A5801D95658B8 /* OSCKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E21AEDD8BC77F3BF252D914037674B2E /* OSCKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E4230DB0D114C94B081018C1AC1E9972 /* CocoaAsyncSocket-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D9AAB69FCD918279D3FDE1A9B51F85 /* CocoaAsyncSocket-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E97B57F3070F23E9A57E00C1D1B0F815 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0C938FBB82029576DADC3497E6FCC138 /* OscReceivedElements.cpp */; };
+		EC1D123DFCDDBF895DA7622FC04FDD01 /* OscPrintReceivedElements.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BCD0709650268598AEA6806E0C3A06D /* OscPrintReceivedElements.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		EEC1FFD229ABF167D6B900E4EE8336E9 /* OSCServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D93D789B66568DEE9EC82C1DF1902283 /* OSCServer.m */; };
+		F757931D3E42B9F7852CA4985B8B1445 /* OSCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D7BC850C99927D586ADABA5DF49EAD /* OSCClient.m */; };
+		FFA692069B5F985BE7590844ED9F4B05 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E20A80E210BD40CAB293801A42A8B6 /* Security.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		461F890CB5AF08BB6A4B185F35825B77 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 708FC2B08C8CF11EB4D5E8B7CACF6B66;
+			remoteInfo = OSCKit;
+		};
+		64D6C8A68648B850F5AD2830EB425BB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC0D2D2B4EE7C873431AB3502859CA60;
+			remoteInfo = CocoaAsyncSocket;
+		};
+		9A31E174F4493A2EB1EED4041A9E19DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC0D2D2B4EE7C873431AB3502859CA60;
+			remoteInfo = CocoaAsyncSocket;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02DB0DA99AFEB6CAA1FE7759AB0AC656 /* OSCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = OSCKit.framework; path = OSCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		02FAFC4AA5E6192CD768CE6F6CBA2553 /* OSCKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = OSCKit.modulemap; sourceTree = "<group>"; };
+		067876902F6268077186C0A540B29764 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0C938FBB82029576DADC3497E6FCC138 /* OscReceivedElements.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = OscReceivedElements.cpp; path = OSCKit/oscpack/OscReceivedElements.cpp; sourceTree = "<group>"; };
+		15639BC4CA51F6DCBE95B119EAF7E136 /* OSCKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OSCKit-prefix.pch"; sourceTree = "<group>"; };
+		1A52FD15E01EB12E01722C96D7B278A6 /* OSCProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OSCProtocol.h; path = OSCKit/OSCProtocol.h; sourceTree = "<group>"; };
+		1C1C7B68418C66E2E0212FCF584BADD4 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Source/GCD/GCDAsyncSocket.h; sourceTree = "<group>"; };
+		20D1194B574D3E6E13911A3E2A8B62FF /* Pods-Shared-Action-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Shared-Action-acknowledgements.plist"; sourceTree = "<group>"; };
+		25F4CEB6DE17A0520F0D9CF7B4B51570 /* OscTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OscTypes.h; path = OSCKit/oscpack/OscTypes.h; sourceTree = "<group>"; };
+		30E20A80E210BD40CAB293801A42A8B6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		3DC11316D27CAA912DD5A03F1B460EDD /* OscTypes.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = OscTypes.cpp; path = OSCKit/oscpack/OscTypes.cpp; sourceTree = "<group>"; };
+		4139178A2204B3BCA7E32A92F4401086 /* OscException.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OscException.h; path = OSCKit/oscpack/OscException.h; sourceTree = "<group>"; };
+		46338CEC8A7CFC9AAB999F9EFA83CBC2 /* Pods-Shared-Action.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Shared-Action.debug.xcconfig"; sourceTree = "<group>"; };
+		5198CA689B26B63663740BE30DBE12E4 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncUdpSocket.h; path = Source/GCD/GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		51E0B05888FF6EEF31B449E96E1C2C23 /* Pods-Shared-Action-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Shared-Action-umbrella.h"; sourceTree = "<group>"; };
+		53980A7E8A6C8BC5DDD1026F9488612A /* CocoaAsyncSocket-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaAsyncSocket-prefix.pch"; sourceTree = "<group>"; };
+		55A92B664DCF0662EC0900C472C57AF7 /* Pods_Shared_Action.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Shared_Action.framework; path = "Pods-Shared-Action.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5780C355502C167D60B20F8931FB1F65 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaAsyncSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DC7751DE956BBEB2563B4B52972CB2F /* CocoaAsyncSocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CocoaAsyncSocket-dummy.m"; sourceTree = "<group>"; };
+		6E6BF6CF887DCEED34776300A65130EB /* Pods-Shared-Action-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Shared-Action-acknowledgements.markdown"; sourceTree = "<group>"; };
+		717DBD9915689F50CDFCE3237A05E16F /* OscPacketListener.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OscPacketListener.h; path = OSCKit/oscpack/OscPacketListener.h; sourceTree = "<group>"; };
+		7887E2D3FDDE1F5C98F16B9FFD39FC27 /* OSCKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "OSCKit-dummy.m"; sourceTree = "<group>"; };
+		7E403F82BE624D09E3C61711BF4E539C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		810F781237879C8378AC40326BBF0A12 /* OSCMessage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OSCMessage.m; path = OSCKit/OSCMessage.m; sourceTree = "<group>"; };
+		8238E0F3DCF901A737C53907B8178FAA /* OSCKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OSCKit.h; path = OSCKit/OSCKit.h; sourceTree = "<group>"; };
+		82CB8710621BD2BDC04BD6FBEDBE6582 /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = OscOutboundPacketStream.cpp; path = OSCKit/oscpack/OscOutboundPacketStream.cpp; sourceTree = "<group>"; };
+		834A21753186EAB73E48CDD40D270FDF /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = OscPrintReceivedElements.cpp; path = OSCKit/oscpack/OscPrintReceivedElements.cpp; sourceTree = "<group>"; };
+		85C91166F7984FC8AD03FF5EC091096C /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OscOutboundPacketStream.h; path = OSCKit/oscpack/OscOutboundPacketStream.h; sourceTree = "<group>"; };
+		86B6930CC6CC2BBE9F8E1D1154522A4F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		877A0702173AC4FCDFFEBAAE2E7A9152 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/CoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		9070596153500EBE5330C2C7BD5D57FF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		939E463A20695853ABC739DA9B0F3C4C /* CocoaAsyncSocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CocoaAsyncSocket.xcconfig; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		971173DCAFC053622ED0EB7F2044EF65 /* OSCServer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OSCServer.h; path = OSCKit/OSCServer.h; sourceTree = "<group>"; };
+		976BBBBB24996EE6082D48516D790BBC /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CocoaAsyncSocket.framework; path = CocoaAsyncSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BCD0709650268598AEA6806E0C3A06D /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OscPrintReceivedElements.h; path = OSCKit/oscpack/OscPrintReceivedElements.h; sourceTree = "<group>"; };
+		9FE4E4400E59EAAC37FCEF694B542DE5 /* OscReceivedElements.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OscReceivedElements.h; path = OSCKit/oscpack/OscReceivedElements.h; sourceTree = "<group>"; };
+		A264D0497F09D4879ED033B0392294E7 /* OSCMessage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OSCMessage.h; path = OSCKit/OSCMessage.h; sourceTree = "<group>"; };
+		B146253372B29F44AA4663EDD48FB033 /* OSCProtocol.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = OSCProtocol.mm; path = OSCKit/OSCProtocol.mm; sourceTree = "<group>"; };
+		B25410473DAE67E9BD032D209DE374BA /* OSCClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OSCClient.h; path = OSCKit/OSCClient.h; sourceTree = "<group>"; };
+		B69FBEB027D151CAA253FE1F67CE8C9C /* CocoaAsyncSocket.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CocoaAsyncSocket.modulemap; sourceTree = "<group>"; };
+		B7164B8C8E961769ACDF335F31419457 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncUdpSocket.m; path = Source/GCD/GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		B81705F11576FB01BE116D1129758BF8 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MessageMappingOscPacketListener.h; path = OSCKit/oscpack/MessageMappingOscPacketListener.h; sourceTree = "<group>"; };
+		C2231418AF20503A4B36DB959B2418FD /* Pods-Shared-Action.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Shared-Action.release.xcconfig"; sourceTree = "<group>"; };
+		C29D67AE944573C3B2C9D70AD4EED1C7 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = Source/GCD/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		D38E55FF1286F23CA0A4C4A388B6AB6F /* OscHostEndianness.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OscHostEndianness.h; path = OSCKit/oscpack/OscHostEndianness.h; sourceTree = "<group>"; };
+		D93D789B66568DEE9EC82C1DF1902283 /* OSCServer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OSCServer.m; path = OSCKit/OSCServer.m; sourceTree = "<group>"; };
+		D96442E0FD6E99E4AE88EF1D1164E7B1 /* Pods-Shared-Action-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Shared-Action-dummy.m"; sourceTree = "<group>"; };
+		D9D9AAB69FCD918279D3FDE1A9B51F85 /* CocoaAsyncSocket-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaAsyncSocket-umbrella.h"; sourceTree = "<group>"; };
+		E08CB51A463C214C4F48A38440BF590B /* OSCKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OSCKit.xcconfig; sourceTree = "<group>"; };
+		E21AEDD8BC77F3BF252D914037674B2E /* OSCKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OSCKit-umbrella.h"; sourceTree = "<group>"; };
+		F57D7A1D2061ECE56B2AD6154E338688 /* Pods-Shared-Action-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Shared-Action-resources.sh"; sourceTree = "<group>"; };
+		F6D7BC850C99927D586ADABA5DF49EAD /* OSCClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OSCClient.m; path = OSCKit/OSCClient.m; sourceTree = "<group>"; };
+		FBE574D3F99004E317FE7C195E7A49DB /* Pods-Shared-Action-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Shared-Action-frameworks.sh"; sourceTree = "<group>"; };
+		FEAEE45D3FC4E67A45E286DCB0D50AC8 /* Pods-Shared-Action.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Shared-Action.modulemap"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		395B08EA9C078B835B00A391609A62F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58C60378E9552E4479224892E17B1490 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89A0509148874948D754353264EED462 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CBB4B46A204478364DAEF2ECABF647FC /* Cocoa.framework in Frameworks */,
+				1CCD1006B0850BD0E1F7D205D048650D /* CocoaAsyncSocket.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93F869EDFDD36756BA537EB665793449 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D74151E82696AE966F792828BB81DB6F /* Cocoa.framework in Frameworks */,
+				0E29BFED3333BB3C8E6E97C9DBC90B00 /* CoreServices.framework in Frameworks */,
+				FFA692069B5F985BE7590844ED9F4B05 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0085E942656BF303D62B36261DC070DA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				32678288903AC847F56DF28F0048207B /* CocoaAsyncSocket */,
+				92690F1B464B8199D874C6A6DF58A2D1 /* OSCKit */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		1158253D7C0D6CF9910AE931978F3ADA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5780C355502C167D60B20F8931FB1F65 /* CocoaAsyncSocket.framework */,
+				E08EB8422C2652745BC8C6EBC5CFA82A /* OS X */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2DD66530DA7E7F72266BACBAEF3DED62 /* Pods-Shared-Action */ = {
+			isa = PBXGroup;
+			children = (
+				067876902F6268077186C0A540B29764 /* Info.plist */,
+				FEAEE45D3FC4E67A45E286DCB0D50AC8 /* Pods-Shared-Action.modulemap */,
+				6E6BF6CF887DCEED34776300A65130EB /* Pods-Shared-Action-acknowledgements.markdown */,
+				20D1194B574D3E6E13911A3E2A8B62FF /* Pods-Shared-Action-acknowledgements.plist */,
+				D96442E0FD6E99E4AE88EF1D1164E7B1 /* Pods-Shared-Action-dummy.m */,
+				FBE574D3F99004E317FE7C195E7A49DB /* Pods-Shared-Action-frameworks.sh */,
+				F57D7A1D2061ECE56B2AD6154E338688 /* Pods-Shared-Action-resources.sh */,
+				51E0B05888FF6EEF31B449E96E1C2C23 /* Pods-Shared-Action-umbrella.h */,
+				46338CEC8A7CFC9AAB999F9EFA83CBC2 /* Pods-Shared-Action.debug.xcconfig */,
+				C2231418AF20503A4B36DB959B2418FD /* Pods-Shared-Action.release.xcconfig */,
+			);
+			name = "Pods-Shared-Action";
+			path = "Target Support Files/Pods-Shared-Action";
+			sourceTree = "<group>";
+		};
+		32678288903AC847F56DF28F0048207B /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				1C1C7B68418C66E2E0212FCF584BADD4 /* GCDAsyncSocket.h */,
+				C29D67AE944573C3B2C9D70AD4EED1C7 /* GCDAsyncSocket.m */,
+				5198CA689B26B63663740BE30DBE12E4 /* GCDAsyncUdpSocket.h */,
+				B7164B8C8E961769ACDF335F31419457 /* GCDAsyncUdpSocket.m */,
+				BFDFC9B5083ECAA2D54C8A10708729D5 /* Support Files */,
+			);
+			name = CocoaAsyncSocket;
+			path = CocoaAsyncSocket;
+			sourceTree = "<group>";
+		};
+		71D87BC256F88BAB5C5ACF88D35C4D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				976BBBBB24996EE6082D48516D790BBC /* CocoaAsyncSocket.framework */,
+				02DB0DA99AFEB6CAA1FE7759AB0AC656 /* OSCKit.framework */,
+				55A92B664DCF0662EC0900C472C57AF7 /* Pods_Shared_Action.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				1158253D7C0D6CF9910AE931978F3ADA /* Frameworks */,
+				0085E942656BF303D62B36261DC070DA /* Pods */,
+				71D87BC256F88BAB5C5ACF88D35C4D06 /* Products */,
+				D5539016B242CC5B88E9067179AA2379 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		9109267FEC466C7C755CE13C3A87C1DC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7E403F82BE624D09E3C61711BF4E539C /* Info.plist */,
+				02FAFC4AA5E6192CD768CE6F6CBA2553 /* OSCKit.modulemap */,
+				E08CB51A463C214C4F48A38440BF590B /* OSCKit.xcconfig */,
+				7887E2D3FDDE1F5C98F16B9FFD39FC27 /* OSCKit-dummy.m */,
+				15639BC4CA51F6DCBE95B119EAF7E136 /* OSCKit-prefix.pch */,
+				E21AEDD8BC77F3BF252D914037674B2E /* OSCKit-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/OSCKit";
+			sourceTree = "<group>";
+		};
+		92690F1B464B8199D874C6A6DF58A2D1 /* OSCKit */ = {
+			isa = PBXGroup;
+			children = (
+				B81705F11576FB01BE116D1129758BF8 /* MessageMappingOscPacketListener.h */,
+				B25410473DAE67E9BD032D209DE374BA /* OSCClient.h */,
+				F6D7BC850C99927D586ADABA5DF49EAD /* OSCClient.m */,
+				4139178A2204B3BCA7E32A92F4401086 /* OscException.h */,
+				D38E55FF1286F23CA0A4C4A388B6AB6F /* OscHostEndianness.h */,
+				8238E0F3DCF901A737C53907B8178FAA /* OSCKit.h */,
+				A264D0497F09D4879ED033B0392294E7 /* OSCMessage.h */,
+				810F781237879C8378AC40326BBF0A12 /* OSCMessage.m */,
+				82CB8710621BD2BDC04BD6FBEDBE6582 /* OscOutboundPacketStream.cpp */,
+				85C91166F7984FC8AD03FF5EC091096C /* OscOutboundPacketStream.h */,
+				717DBD9915689F50CDFCE3237A05E16F /* OscPacketListener.h */,
+				834A21753186EAB73E48CDD40D270FDF /* OscPrintReceivedElements.cpp */,
+				9BCD0709650268598AEA6806E0C3A06D /* OscPrintReceivedElements.h */,
+				1A52FD15E01EB12E01722C96D7B278A6 /* OSCProtocol.h */,
+				B146253372B29F44AA4663EDD48FB033 /* OSCProtocol.mm */,
+				0C938FBB82029576DADC3497E6FCC138 /* OscReceivedElements.cpp */,
+				9FE4E4400E59EAAC37FCEF694B542DE5 /* OscReceivedElements.h */,
+				971173DCAFC053622ED0EB7F2044EF65 /* OSCServer.h */,
+				D93D789B66568DEE9EC82C1DF1902283 /* OSCServer.m */,
+				3DC11316D27CAA912DD5A03F1B460EDD /* OscTypes.cpp */,
+				25F4CEB6DE17A0520F0D9CF7B4B51570 /* OscTypes.h */,
+				9109267FEC466C7C755CE13C3A87C1DC /* Support Files */,
+			);
+			name = OSCKit;
+			path = OSCKit;
+			sourceTree = "<group>";
+		};
+		BFDFC9B5083ECAA2D54C8A10708729D5 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B69FBEB027D151CAA253FE1F67CE8C9C /* CocoaAsyncSocket.modulemap */,
+				939E463A20695853ABC739DA9B0F3C4C /* CocoaAsyncSocket.xcconfig */,
+				6DC7751DE956BBEB2563B4B52972CB2F /* CocoaAsyncSocket-dummy.m */,
+				53980A7E8A6C8BC5DDD1026F9488612A /* CocoaAsyncSocket-prefix.pch */,
+				D9D9AAB69FCD918279D3FDE1A9B51F85 /* CocoaAsyncSocket-umbrella.h */,
+				86B6930CC6CC2BBE9F8E1D1154522A4F /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/CocoaAsyncSocket";
+			sourceTree = "<group>";
+		};
+		D5539016B242CC5B88E9067179AA2379 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2DD66530DA7E7F72266BACBAEF3DED62 /* Pods-Shared-Action */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		E08EB8422C2652745BC8C6EBC5CFA82A /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				9070596153500EBE5330C2C7BD5D57FF /* Cocoa.framework */,
+				877A0702173AC4FCDFFEBAAE2E7A9152 /* CoreServices.framework */,
+				30E20A80E210BD40CAB293801A42A8B6 /* Security.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		066131069354C4CC132CAB645145E8F7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4230DB0D114C94B081018C1AC1E9972 /* CocoaAsyncSocket-umbrella.h in Headers */,
+				A882891E5A89CADF96C2CA79606409CA /* GCDAsyncSocket.h in Headers */,
+				AC7DC2A21843CD99040DCD79FF3BE91B /* GCDAsyncUdpSocket.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2ACB8D8295E35FF06C78DD5677054D7C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24C6B2ADF2D07971E927479D8F60EFB1 /* Pods-Shared-Action-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6F0A1AE3703B64D28EB16798553EF2DB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D788943A39078871A704EE569A921A9 /* MessageMappingOscPacketListener.h in Headers */,
+				7FDA3DA6F6AFF14E83FDF8C444F76100 /* OSCClient.h in Headers */,
+				173B400F21D9658A660602F7BD9E8226 /* OscException.h in Headers */,
+				721F36E4CDAB242714D13493FB4CE681 /* OscHostEndianness.h in Headers */,
+				D74EF48EF0A040B12B5A5801D95658B8 /* OSCKit-umbrella.h in Headers */,
+				3ABC0ACC268F04A2C49E4BA3F69EDFD1 /* OSCKit.h in Headers */,
+				4C73D8E3518F0D5C0CA5F4B3E5D7F90A /* OSCMessage.h in Headers */,
+				1D272549864488B39AF843CBC578ABB2 /* OscOutboundPacketStream.h in Headers */,
+				812AB57F4E03756F2EA43B076C0617E7 /* OscPacketListener.h in Headers */,
+				EC1D123DFCDDBF895DA7622FC04FDD01 /* OscPrintReceivedElements.h in Headers */,
+				4AB8B0F353AE7D609EB0434381EEAD8E /* OSCProtocol.h in Headers */,
+				C53CB621C46CA1F6B3670ED0F9861D76 /* OscReceivedElements.h in Headers */,
+				0693FA738DFCC06899A841C24BFE6E72 /* OSCServer.h in Headers */,
+				4C857190FB7DA56F5777E5684E9D5983 /* OscTypes.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		61B08FB6D7E99B743C84224B025F7420 /* Pods-Shared-Action */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49E2EF349FE15FDC7BAAA3D0AEA56B23 /* Build configuration list for PBXNativeTarget "Pods-Shared-Action" */;
+			buildPhases = (
+				9D61A38ED9D3322253D93CDBD208BD08 /* Sources */,
+				395B08EA9C078B835B00A391609A62F5 /* Frameworks */,
+				2ACB8D8295E35FF06C78DD5677054D7C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B3C798708175B50308787CFDB60DAE2A /* PBXTargetDependency */,
+				6F0185347E9D734A4EE7F7709AC7638F /* PBXTargetDependency */,
+			);
+			name = "Pods-Shared-Action";
+			productName = "Pods-Shared-Action";
+			productReference = 55A92B664DCF0662EC0900C472C57AF7 /* Pods_Shared_Action.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		708FC2B08C8CF11EB4D5E8B7CACF6B66 /* OSCKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7CBE91C0061672BA77411BCC32080C5 /* Build configuration list for PBXNativeTarget "OSCKit" */;
+			buildPhases = (
+				BCA63E75E41C99B78513823A3DB8A517 /* Sources */,
+				89A0509148874948D754353264EED462 /* Frameworks */,
+				6F0A1AE3703B64D28EB16798553EF2DB /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD53BA16466B102EADD1B4B80586D293 /* PBXTargetDependency */,
+			);
+			name = OSCKit;
+			productName = OSCKit;
+			productReference = 02DB0DA99AFEB6CAA1FE7759AB0AC656 /* OSCKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2A03B912F777B2BFB05E7B9E903B15F /* Build configuration list for PBXNativeTarget "CocoaAsyncSocket" */;
+			buildPhases = (
+				363C1C1530B495CCBCE873FC994AD323 /* Sources */,
+				93F869EDFDD36756BA537EB665793449 /* Frameworks */,
+				066131069354C4CC132CAB645145E8F7 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CocoaAsyncSocket;
+			productName = CocoaAsyncSocket;
+			productReference = 976BBBBB24996EE6082D48516D790BBC /* CocoaAsyncSocket.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 71D87BC256F88BAB5C5ACF88D35C4D06 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */,
+				708FC2B08C8CF11EB4D5E8B7CACF6B66 /* OSCKit */,
+				61B08FB6D7E99B743C84224B025F7420 /* Pods-Shared-Action */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		363C1C1530B495CCBCE873FC994AD323 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76D9FBD03A0D72E60DCCC3D5F15D3174 /* CocoaAsyncSocket-dummy.m in Sources */,
+				C72E64802C5BF685D3A6E2E7D82596D7 /* GCDAsyncSocket.m in Sources */,
+				D37A91258103DEFDFAFF55A001D97D02 /* GCDAsyncUdpSocket.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D61A38ED9D3322253D93CDBD208BD08 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E9086DDE3E00DD4BF1540099DB47997 /* Pods-Shared-Action-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCA63E75E41C99B78513823A3DB8A517 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F757931D3E42B9F7852CA4985B8B1445 /* OSCClient.m in Sources */,
+				63C78BDC7D67D1E287FBE9AA3C507E7D /* OSCKit-dummy.m in Sources */,
+				98C866918C7B03F3FC1400D0625B2AFB /* OSCMessage.m in Sources */,
+				5EB1B262F845459BB2DB2E84A8810CAE /* OscOutboundPacketStream.cpp in Sources */,
+				B142AA784A6D9FBB4D00E97B4A705CC6 /* OscPrintReceivedElements.cpp in Sources */,
+				3D07F17DC33F3E8FD28A0CB0522F5C16 /* OSCProtocol.mm in Sources */,
+				E97B57F3070F23E9A57E00C1D1B0F815 /* OscReceivedElements.cpp in Sources */,
+				EEC1FFD229ABF167D6B900E4EE8336E9 /* OSCServer.m in Sources */,
+				873C70DB42C386C010504549A1024629 /* OscTypes.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6F0185347E9D734A4EE7F7709AC7638F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OSCKit;
+			target = 708FC2B08C8CF11EB4D5E8B7CACF6B66 /* OSCKit */;
+			targetProxy = 461F890CB5AF08BB6A4B185F35825B77 /* PBXContainerItemProxy */;
+		};
+		AD53BA16466B102EADD1B4B80586D293 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaAsyncSocket;
+			target = AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */;
+			targetProxy = 64D6C8A68648B850F5AD2830EB425BB4 /* PBXContainerItemProxy */;
+		};
+		B3C798708175B50308787CFDB60DAE2A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaAsyncSocket;
+			target = AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */;
+			targetProxy = 9A31E174F4493A2EB1EED4041A9E19DE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		10E850B85F3451D5157989C3751F075F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		2CF0B1D8BAA941049A0352D8CBB1158C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E08CB51A463C214C4F48A38440BF590B /* OSCKit.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/OSCKit/OSCKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/OSCKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MODULEMAP_FILE = "Target Support Files/OSCKit/OSCKit.modulemap";
+				PRODUCT_MODULE_NAME = OSCKit;
+				PRODUCT_NAME = OSCKit;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5FC5B567D72D8FED8A0632A82CE78D3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E08CB51A463C214C4F48A38440BF590B /* OSCKit.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/OSCKit/OSCKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/OSCKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MODULEMAP_FILE = "Target Support Files/OSCKit/OSCKit.modulemap";
+				PRODUCT_MODULE_NAME = OSCKit;
+				PRODUCT_NAME = OSCKit;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		89E15F9FC6EB0A833A8C8CEF70DC845D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 939E463A20695853ABC739DA9B0F3C4C /* CocoaAsyncSocket.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/CocoaAsyncSocket/CocoaAsyncSocket-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CocoaAsyncSocket/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MODULEMAP_FILE = "Target Support Files/CocoaAsyncSocket/CocoaAsyncSocket.modulemap";
+				PRODUCT_MODULE_NAME = CocoaAsyncSocket;
+				PRODUCT_NAME = CocoaAsyncSocket;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BDE09876F7170C2B45939C78B819FDF2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C2231418AF20503A4B36DB959B2418FD /* Pods-Shared-Action.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Target Support Files/Pods-Shared-Action/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MODULEMAP_FILE = "Target Support Files/Pods-Shared-Action/Pods-Shared-Action.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D5B651532ED11AFBC5E147B64848AFB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		E1FAF268977539A711B093B8D992F27F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 46338CEC8A7CFC9AAB999F9EFA83CBC2 /* Pods-Shared-Action.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Target Support Files/Pods-Shared-Action/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MODULEMAP_FILE = "Target Support Files/Pods-Shared-Action/Pods-Shared-Action.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FB9D4A544A502F168C936F3CD0E5AE95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 939E463A20695853ABC739DA9B0F3C4C /* CocoaAsyncSocket.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/CocoaAsyncSocket/CocoaAsyncSocket-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CocoaAsyncSocket/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MODULEMAP_FILE = "Target Support Files/CocoaAsyncSocket/CocoaAsyncSocket.modulemap";
+				PRODUCT_MODULE_NAME = CocoaAsyncSocket;
+				PRODUCT_NAME = CocoaAsyncSocket;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5B651532ED11AFBC5E147B64848AFB4 /* Debug */,
+				10E850B85F3451D5157989C3751F075F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		49E2EF349FE15FDC7BAAA3D0AEA56B23 /* Build configuration list for PBXNativeTarget "Pods-Shared-Action" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1FAF268977539A711B093B8D992F27F /* Debug */,
+				BDE09876F7170C2B45939C78B819FDF2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7CBE91C0061672BA77411BCC32080C5 /* Build configuration list for PBXNativeTarget "OSCKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FC5B567D72D8FED8A0632A82CE78D3D /* Debug */,
+				2CF0B1D8BAA941049A0352D8CBB1158C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2A03B912F777B2BFB05E7B9E903B15F /* Build configuration list for PBXNativeTarget "CocoaAsyncSocket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89E15F9FC6EB0A833A8C8CEF70DC845D /* Debug */,
+				FB9D4A544A502F168C936F3CD0E5AE95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

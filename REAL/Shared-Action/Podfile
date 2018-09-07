@@ -1,0 +1,12 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Shared-Action' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+  pod 'OSCKit'
+  use_frameworks! # Add this if you are targeting iOS 8+ or using Swift
+  pod 'CocoaAsyncSocket'
+
+  # Pods for Shared-Action
+end
